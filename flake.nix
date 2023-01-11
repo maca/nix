@@ -18,7 +18,7 @@
   };
 
   outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
-  let 
+  let
     inherit (darwin.lib) darwinSystem;
     inherit (inputs.nixpkgs-unstable.lib) attrValues makeOverridable optionalAttrs singleton;
 

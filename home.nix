@@ -1,5 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib,  ... }:
 
+let
+  extraNodePackages = import ./node/default.nix {};
+in
 {
   home.stateVersion = "22.11";
 
@@ -9,14 +12,17 @@
   programs.htop.enable = true;
   programs.htop.settings.show_program_path = true;
 
+
   programs.emacs = {
     enable = true;
     package = pkgs.emacs;
   };
 
+
   programs.zsh = {
     enable = true;
   };
+
 
   programs.git = {
     enable = true;
@@ -36,6 +42,7 @@
       pull.ff = "only";
     };
   };
+
 
   programs.password-store = {
     enable = true;
@@ -141,20 +148,25 @@
   };
 
   home.packages = with pkgs; [
-    # Some basics
     coreutils
     curl
     wget
-    fzf
-    fd
     gnupg
     tmux
+    fzf
+    fd
+    silver-searcher
 
-    # Dev stuff
     jq
-    nodejs
 
+    nodejs
     yarn
+
+    elmPackages.elm
+    extraNodePackages.elm-test
+    extraNodePackages.elm-format
+    extraNodePackages.elm-analyse
+    extraNodePackages.elm-watch
   ] ++ lib.optionals stdenv.isDarwin [
     m-cli # useful macOS CLI commands
   ];

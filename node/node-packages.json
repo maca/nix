@@ -1,0 +1,7 @@
+[
+  "elm-test",
+  "elm-format",
+  "elm-analyse",
+  "elm-watch",
+  "node-gyp-build"
+]

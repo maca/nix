@@ -40,10 +40,11 @@
   programs.password-store = {
     enable = true;
     settings = {
-      PASSWORD_STORE_DIR = "/some/directory";
+      PASSWORD_STORE_DIR = "/Users/macarioortega/.password-store";
       PASSWORD_STORE_CLIP_TIME = "60";
     };
   };
+
 
   home.file = {
     ".emacs.el".source = "/Users/macarioortega/nix-home/emacs.el";

@@ -46,6 +46,8 @@
   };
 
   home.file = {
+    ".emacs.el".source = "/Users/macarioortega/nix-home/emacs.el";
+    "emacs/ligature.el".source = "/Users/macarioortega/nix-home/emacs/ligature.el";
     ".config/tmux/tmux.conf".text = ''
       new-session
 

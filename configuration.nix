@@ -1,7 +1,6 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, callPackage, ... }:
 {
   nix.configureBuildUsers = true;
-
 
   # Enable experimental nix command and flakes
   # nix.package = pkgs.nixUnstable;
@@ -13,10 +12,16 @@
   '';
 
 
-  # Create /etc/bashrc that loads the nix-darwin environment.
   programs.zsh = {
     enable = true;
   };
+
+
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
 
 
   # Auto upgrade nix package and the daemon service.
@@ -25,6 +30,14 @@
 
   environment.systemPackages = with pkgs; [
     terminal-notifier
+
+    (emacsWithPackagesFromUsePackage {
+      config = "/Users/macarioortega/nix-home/emacs.el";
+      defaultInitFile = true;
+      package = pkgs.emacsGit;
+      alwaysEnsure = true;
+      alwaysTangle = true;
+    })
   ];
 
 

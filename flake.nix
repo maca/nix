@@ -12,6 +12,9 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    # emacs-overlay.url = github:nix-community/emacs-overlay;
+    # emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
@@ -24,14 +27,14 @@
     darwinConfigurations = rec {
       VNDR-A436 = darwinSystem {
         system = "aarch64-darwin";
-        modules = [ 
+        modules = [
           ./configuration.nix
 
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.macarioortega = import ./home.nix;            
+            home-manager.users.macarioortega = import ./home.nix;
           }
         ];
       };

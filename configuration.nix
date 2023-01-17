@@ -11,17 +11,9 @@
     extra-platforms = x86_64-darwin aarch64-darwin
   '';
 
-
   programs.zsh = {
     enable = true;
   };
-
-
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
-  ];
 
 
   # Auto upgrade nix package and the daemon service.
@@ -29,15 +21,8 @@
 
 
   environment.systemPackages = with pkgs; [
+    pkgs.pam-reattach
     terminal-notifier
-
-    (emacsWithPackagesFromUsePackage {
-      config = "/Users/macarioortega/nix-home/emacs.el";
-      defaultInitFile = true;
-      package = pkgs.emacsGit;
-      alwaysEnsure = true;
-      alwaysTangle = true;
-    })
   ];
 
 

@@ -85,6 +85,12 @@
 (require 'use-package)
 
 
+(use-package direnv
+  :ensure t
+  :config
+  (direnv-mode))
+
+
 ;; Hide mode lighters
 (use-package diminish :ensure t)
 
@@ -616,8 +622,9 @@ or the current buffer directory."
 (use-package go-mode
   :ensure t)
 
-(use-package nix-mode
-  :mode "\\.nix\\'")
+;; (use-package nix-mode
+;;   :ensure t
+;;   :mode "\\.nix\\'")
 
 (use-package elm-mode
   :ensure t

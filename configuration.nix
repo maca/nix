@@ -11,9 +11,11 @@
     extra-platforms = x86_64-darwin aarch64-darwin
   '';
 
-  programs.zsh = {
-    enable = true;
-  };
+
+  programs.bash.enable = true;
+  programs.zsh.enable = true;
+  programs.fish.enable = true;
+  environment.shells = with pkgs; [ bashInteractive fish zsh ];
 
 
   # Auto upgrade nix package and the daemon service.

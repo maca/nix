@@ -62,6 +62,42 @@ in
   };
 
 
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = true;
+      right_format = "$time";
+      time = {
+        disabled = false;
+        style = "bright-black";
+        format = "[$time]($style)";
+      };
+      line_break.disabled = true;
+    };
+  };
+
+
+  programs.fish = {
+    enable = true;
+    plugins = [
+      # Need this when using Fish as a default macOS shell in order to pick
+      # up ~/.nix-profile/bin
+      {
+        name = "nix-env";
+        src = pkgs.fetchFromGitHub {
+          owner = "lilyball";
+          repo = "nix-env.fish";
+          rev = "00c6cc762427efe08ac0bd0d1b1d12048d3ca727";
+          sha256 = "1hrl22dd0aaszdanhvddvqz3aq40jp9zi2zn0v1hjnf7fx4bgpma";
+        };
+      }
+    ];
+    shellAliases = {
+      e = "${pkgs.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs";
+    };
+  };
+
+
   programs.zsh = {
     enable = true;
     shellAliases = {

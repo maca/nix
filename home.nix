@@ -97,6 +97,7 @@ in
       PASSWORD_STORE_DIR = "/Users/macarioortega/.password-store";
       PASSWORD_STORE_CLIP_TIME = "60";
     };
+    package = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
   };
 
 
@@ -193,6 +194,7 @@ in
       set-option -sg escape-time 0
     '';
   };
+
 
   home.packages = with pkgs; [
     coreutils

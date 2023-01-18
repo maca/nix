@@ -263,6 +263,7 @@
   :ensure t
   :config
   (projectile-mode +1)
+  (setq projectile-enable-caching t)
 
   (evil-leader/set-key
     "p" 'projectile-command-map)
@@ -460,7 +461,6 @@ or the current buffer directory."
   (evil-leader/set-key
     "m" 'my-neotree-project-dir-toggle)
 
-  (setq projectile-switch-project-action 'neotree-projectile-action)
   (add-hook 'neotree-mode-hook
             (lambda ()
               (define-key evil-normal-state-local-map (kbd "q")
@@ -622,9 +622,9 @@ or the current buffer directory."
 (use-package go-mode
   :ensure t)
 
-;; (use-package nix-mode
-;;   :ensure t
-;;   :mode "\\.nix\\'")
+(use-package nix-mode
+  :ensure t
+  :mode "\\.nix\\'")
 
 (use-package elm-mode
   :ensure t

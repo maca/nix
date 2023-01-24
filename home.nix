@@ -118,11 +118,19 @@ in
 
       ignore = "update-index --assume-unchanged";
       unignore = "update-index --no-assume-unchanged";
+      d = "difftool";
     };
 
     ignores = ["*.swp"];
     extraConfig = {
       pull.ff = "only";
+      init = {defaultBranch = "main";};
+      pager.difftool = true;
+      diff.tool = "difftastic";
+      difftool.prompt = false;
+      difftool.difftastic.cmd = "${pkgs.difftastic}/bin/difft $LOCAL $REMOTE";
+      github.user = "maca";
+      gitlab.user = "maca";
     };
   };
 
@@ -241,6 +249,7 @@ in
     fzf
     fd
     silver-searcher
+    difftastic
 
     jq
 

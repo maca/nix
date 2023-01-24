@@ -56,7 +56,6 @@ in
       config = "/Users/macarioortega/nix-home/emacs.el";
       defaultInitFile = true;
       package = emacs;
-      # alwaysEnsure = true;
       alwaysTangle = true;
     };
   };
@@ -93,7 +92,8 @@ in
       }
     ];
     shellAliases = {
-      e = "${pkgs.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs";
+      emacs = "${pkgs.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs";
+      e = "emacsclient";
     };
   };
 
@@ -257,6 +257,8 @@ in
     yarn
 
     elmPackages.elm
+    elmPackages.elm-language-server
+
     extraNodePackages.elm-test
     extraNodePackages.elm-format
     extraNodePackages.elm-analyse

@@ -175,11 +175,6 @@
     (evil-commentary-mode)
     (diminish 'evil-commentary-mode))
 
-  ;; (use-package atomic-chrome
-  ;;   :config
-  ;;   (atomic-chrome-start-server)
-  ;;   (setq atomic-chrome-buffer-open-style 'frame))
-
   (use-package magit
     :ensure t
     :config
@@ -214,15 +209,15 @@
     :config
     (add-hook 'after-save-hook 'git-time-metric-record))
 
-  (use-package vimish-fold
-    :ensure
-    :after evil)
+  ;; (use-package vimish-fold
+  ;;   :ensure
+  ;;   :after evil)
 
-  (use-package evil-vimish-fold
-    :ensure
-    :after vimish-fold
-    :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode)
-    :config (diminish 'evil-vimish-fold-mode))
+  ;; (use-package evil-vimish-fold
+  ;;   :ensure
+  ;;   :after vimish-fold
+  ;;   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode)
+  ;;   :config (diminish 'evil-vimish-fold-mode))
 
   (use-package evil-collection
     :ensure t
@@ -232,7 +227,8 @@
     (evil-collection-init 'term)
     (evil-collection-init 'vterm)
     (evil-collection-init 'dired)
-    (evil-collection-init 'elisp-mode))
+    (evil-collection-init 'elisp-mode)
+    (evil-collection-init 'xref))
 
   (use-package evil-indent-textobject :ensure t))
 ;;
@@ -252,9 +248,7 @@
   (setq undo-tree-history-directory-alist
         '(("." . "~/.emacs.d/tmp/undo")))
 
-  (evil-leader/set-key
-    "uu" 'undo-tree-visualize)
-
+  (evil-leader/set-key "uu" 'undo-tree-visualize)
   (diminish 'undo-tree-mode))
 ;;
 ;; Load project package
@@ -295,7 +289,7 @@
     "fm" 'counsel-evil-marks
     "fg" 'counsel-git
     "fg" 'counsel-git-grep
-    "fd" 'counsel-grep
+    "fd" 'counsel-imenu
     "fh" 'counsel-recentf
     "fl" 'counsel-locate
     "fs" 'counsel-ag
@@ -306,31 +300,11 @@
     "hl" 'counsel-find-library
     "hs" 'counsel-info-lookup-symbol
     "hu" 'counsel-unicode-char
-    "hv" 'counsel-describe-variable)
+    "hv" 'counsel-describe-variable))
 
-  (use-package counsel :ensure t)
-  (use-package counsel-etags
-    :ensure t
+(use-package counsel :ensure t)
 
-    :hook
-    (prog-mode .
-     (lambda ()
-       (add-hook 'after-save-hook
-                 'counsel-etags-virtual-update-tags 'append 'local)))
 
-    :config
-    ;; Don't ask before rereading the TAGS files if they have changed
-    (setq tags-revert-without-query t)
-    ;; Don't warn when TAGS files are large
-    (setq large-file-warning-threshold nil)
-    ;; How many seconds to wait before rerunning tags for auto-update
-    (setq counsel-etags-update-interval 10)
-    ;; Ignore build directories for tagging
-    (add-to-list 'counsel-etags-ignore-directories "build")
-    (add-to-list 'counsel-etags-ignore-filenames ".clang-format")
-
-    (define-key evil-normal-state-map
-      "gt" 'counsel-etags-find-tag-at-point)))
 ;;
 ;; Autocomplete
 ;;
@@ -567,14 +541,19 @@ or the current buffer directory."
     (require 'company-web-html)))
 
 
+(use-package typescript-mode
+  :ensure t
+  :config
+  (add-hook 'typescript-mode-hook 'tide-setup))
+
+
 (use-package tide
   :ensure t
-
   :config
-  (setq tide-format-options
-        '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t
-          :indentSize 2
-          :placeOpenBraceOnNewLineForFunctions nil))
+  ;; (setq tide-format-options
+  ;;       '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t
+  ;;         :indentSize 2
+  ;;         :placeOpenBraceOnNewLineForFunctions nil))
 
   (add-hook 'tide-mode-hook 'flycheck-mode)
   (add-hook 'tide-mode-hook 'tide-hl-identifier-mode)
@@ -585,12 +564,6 @@ or the current buffer directory."
 
   :hook
   ((before-save . tide-format-before-save)))
-
-
-(use-package typescript-mode
-  :ensure t
-  :config
-  (add-hook 'typescript-mode-hook 'tide-setup))
 
 
 (use-package emmet-mode
@@ -669,25 +642,19 @@ or the current buffer directory."
 (use-package dockerfile-mode
   :ensure t)
 
-;; (use-package pdf-tools
-;;  :pin manual ;; manually update
-;;  :config
-;;  ;; initialise
-;;  (pdf-tools-install)
-;;  ;; open pdfs scaled to fit page
-;;  (setq-default pdf-view-display-size 'fit-page)
-;;  ;; automatically annotate highlights
-;;  (setq pdf-annot-activate-created-annotations t)
-;;  ;; use normal isearch
-;;  (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
-;;  ;; turn off cua so copy works
-;;  (add-hook 'pdf-view-mode-hook (lambda () (cua-mode 0)))
-;;  ;; more fine-grained zooming
-;;  (setq pdf-view-resize-factor 1.1)
-;;  ;; keyboard shortcuts
-;;  (define-key pdf-view-mode-map (kbd "h") 'pdf-annot-add-highlight-markup-annotation)
-;;  (define-key pdf-view-mode-map (kbd "t") 'pdf-annot-add-text-annotation)
-;;  (define-key pdf-view-mode-map (kbd "D") 'pdf-annot-delete))
+(use-package eglot
+  :ensure t
+  :hook ((elm-mode . eglot-ensure))
+  :config
+
+  (evil-leader/set-key
+    "ea" 'eglot-code-actions
+    "er" 'eglot-rename
+    "ed" 'flymake-show-buffer-diagnostics
+    "gd" 'xref-find-definitions
+    "gr" 'xref-find-references
+    "gp" 'xref-prev-line
+    "gn" 'xref-next-line))
 
 (use-package restclient :ensure t)
 
@@ -930,6 +897,7 @@ or the current buffer directory."
 (defun elm-live--get-project-var (name)
   (alist-get
    `(,(elm-live-project-root) ,name) elm-live-mode-vars nil nil #'equal))
+
 
 
 

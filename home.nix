@@ -3,35 +3,36 @@
 let
   extraNodePackages = import ./node/default.nix {};
 
-  emacs = pkgs.emacsPgtk.overrideAttrs (old: {
-    patches =
-      (old.patches or [])
-      ++ [
-        # Fix OS window role (needed for window managers like yabai)
-        (pkgs.fetchpatch {
-          url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
-          sha256 = "0c41rgpi19vr9ai740g09lka3nkjk48ppqyqdnncjrkfgvm2710z";
-        })
+  emacs = pkgs.emacsPgtk;
+  # emacs = pkgs.emacsPgtk.overrideAttrs (old: {
+  #   patches =
+  #     (old.patches or [])
+  #     ++ [
+  #       # Fix OS window role (needed for window managers like yabai)
+  #       (pkgs.fetchpatch {
+  #         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
+  #         sha256 = "0c41rgpi19vr9ai740g09lka3nkjk48ppqyqdnncjrkfgvm2710z";
+  #       })
 
-        # Use poll instead of select to get file descriptors
-        (pkgs.fetchpatch {
-          url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/poll.patch";
-          sha256 = "0j26n6yma4n5wh4klikza6bjnzrmz6zihgcsdx36pn3vbfnaqbh5";
-        })
+  #       # Use poll instead of select to get file descriptors
+  #       (pkgs.fetchpatch {
+  #         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/poll.patch";
+  #         sha256 = "0j26n6yma4n5wh4klikza6bjnzrmz6zihgcsdx36pn3vbfnaqbh5";
+  #       })
 
-        # Enable rounded window with no decoration
-        (pkgs.fetchpatch {
-          url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/round-undecorated-frame.patch";
-          sha256 = "111i0r3ahs0f52z15aaa3chlq7ardqnzpwp8r57kfsmnmg6c2nhf";
-        })
+  #       # Enable rounded window with no decoration
+  #       (pkgs.fetchpatch {
+  #         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/round-undecorated-frame.patch";
+  #         sha256 = "111i0r3ahs0f52z15aaa3chlq7ardqnzpwp8r57kfsmnmg6c2nhf";
+  #       })
 
-        # Make Emacs aware of OS-level light/dark mode
-        (pkgs.fetchpatch {
-          url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
-          sha256 = "14ndp2fqqc95s70fwhpxq58y8qqj4gzvvffp77snm2xk76c1bvnn";
-        })
-      ];
-  });
+  #       # Make Emacs aware of OS-level light/dark mode
+  #       (pkgs.fetchpatch {
+  #         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
+  #         sha256 = "14ndp2fqqc95s70fwhpxq58y8qqj4gzvvffp77snm2xk76c1bvnn";
+  #       })
+  #     ];
+  # });
 
 in
 {
@@ -71,7 +72,6 @@ in
         style = "bright-black";
         format = "[$time]($style)";
       };
-      line_break.disabled = true;
     };
   };
 
@@ -115,6 +115,7 @@ in
       h = "log --pretty=format:'%Creset%C(red bold)[%ad] %C(blue bold)%h %Creset%C(magenta bold)%d %Creset%s %C(green bold)(%an)%Creset' --graph --abbrev-commit --date=short";
       ha = "log --pretty=format:'%Creset%C(red bold)[%ad] %C(blue bold)%h %Creset%C(magenta bold)%d %Creset%s %C(green bold)(%an)%Creset' --graph --all --abbrev-commit --date=short";
       ff = "!branch=$(git symbolic-ref HEAD | cut -d '/' -f 3) && git merge --ff-only $\{1\:-$(git config --get branch.$branch.remote)/$( git config --get branch.$branch.merge | cut -d '/' -f 3)\}";
+      merged = "branch --merged | grep -v \* | xargs git branch -D";
 
       ignore = "update-index --assume-unchanged";
       unignore = "update-index --no-assume-unchanged";
@@ -126,11 +127,15 @@ in
       pull.ff = "only";
       init = {defaultBranch = "main";};
       pager.difftool = true;
+
       diff.tool = "difftastic";
       difftool.prompt = false;
       difftool.difftastic.cmd = "${pkgs.difftastic}/bin/difft $LOCAL $REMOTE";
       github.user = "maca";
       gitlab.user = "maca";
+
+      core.excludesfile = "~/.gitignore";
+      # merge.conflictStyle = "diff3";
     };
   };
 
@@ -148,6 +153,7 @@ in
   home.file = {
     ".emacs.el".source = "/Users/macarioortega/nix-home/emacs.el";
     "emacs/ligature.el".source = "/Users/macarioortega/nix-home/emacs/ligature.el";
+    "emacs/ivy-taskrunner.el".source = "/Users/macarioortega/nix-home/emacs/ivy-taskrunner.el";
     ".config/tmux/tmux.conf".text = ''
       new-session
 
@@ -250,6 +256,7 @@ in
     fd
     silver-searcher
     difftastic
+    lazygit
 
     jq
 

@@ -94,11 +94,8 @@
 ;; Hide mode lighters
 (use-package diminish :ensure t)
 
+
 ;; load theme
-(use-package jazz-theme :ensure t)
-
-(use-package moe-theme :ensure t)
-
 (use-package solarized-theme
   :ensure t
   :config
@@ -209,16 +206,6 @@
     :config
     (add-hook 'after-save-hook 'git-time-metric-record))
 
-  ;; (use-package vimish-fold
-  ;;   :ensure
-  ;;   :after evil)
-
-  ;; (use-package evil-vimish-fold
-  ;;   :ensure
-  ;;   :after vimish-fold
-  ;;   :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode)
-  ;;   :config (diminish 'evil-vimish-fold-mode))
-
   (use-package evil-collection
     :ensure t
     :after evil magit
@@ -228,9 +215,8 @@
     (evil-collection-init 'vterm)
     (evil-collection-init 'dired)
     (evil-collection-init 'elisp-mode)
-    (evil-collection-init 'xref))
-
-  (use-package evil-indent-textobject :ensure t))
+    (evil-collection-init 'xref)
+    (evil-collection-init 'flymake)))
 ;;
 ;; String manipulation
 ;;
@@ -256,8 +242,10 @@
 (use-package projectile
   :ensure t
   :config
+
   (projectile-mode +1)
   (setq projectile-enable-caching t)
+  (setq projectile-completion-system 'ivy)
 
   (evil-leader/set-key
     "p" 'projectile-command-map)
@@ -286,13 +274,14 @@
   (evil-leader/set-key
     "fb" 'ivy-switch-buffer
     "ff" 'counsel-fzf
-    "fm" 'counsel-evil-marks
+    "fm" 'counsel-mark-ring
     "fg" 'counsel-git
     "fg" 'counsel-git-grep
     "fd" 'counsel-imenu
     "fh" 'counsel-recentf
     "fl" 'counsel-locate
     "fs" 'counsel-ag
+    "fr" 'ivy-taskrunner
     "ft" 'counsel-etags-list-tag
     "fp" 'counsel-yank-pop
     "hf" 'counsel-describe-function
@@ -305,97 +294,25 @@
 (use-package counsel :ensure t)
 
 
-;;
-;; Autocomplete
-;;
 (use-package company
   :ensure t
   :config
 
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 2)
-  (setq company-show-numbers t)
-  ;; (push '(company-etags company-keywords) company-backends)
-
-  (define-key company-active-map [tab] 'company-complete-common-or-cycle)
-
   (add-hook 'after-init-hook 'global-company-mode)
+  ;; (add-hook 'after-init-hook 'company-tng-mode)
 
-  (diminish 'company-mode))
-;;
-;; Snippets
-;;
-(defun emmet-hippie-try-expand-line (args)
-  (interactive "P")
-  (when emmet-mode (emmet-expand-line args)))
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 2)
+  (setq company-selection-wrap-around t)
 
+  ;; (define-key company-active-map (kbd "TAB") 'company-select-next)
+  ;; (define-key company-active-map (kbd "<backtab>")
+  ;;   'company-select-previous)
+  ;; (company-tng-mode)
 
-(defun elm-emmet-expand-line (args)
-  (interactive "P")
-  (when (eq major-mode 'elm-mode)
-    (let* ((beg (emmet-find-left-bound))
-           (beg-line (save-excursion (beginning-of-line) (point)))
-           (indentation-level
-            (save-excursion
-              (goto-char beg)
-              (re-search-backward "[^[:space:]]" beg-line t)
-              (current-column))))
+  (diminish 'company-mode)
+  )
 
-      (setq-local emmet-move-cursor-after-expanding nil)
-      (emmet-expand-line args)
-      (html-to-elm beg (point))
-
-      (save-excursion
-        (exchange-dot-and-mark)
-        (forward-line 1)
-        (indent-rigidly (region-beginning)
-                        (region-end)
-                        indentation-level)))))
-
-
-(defun html-to-elm (&optional b e)
-  (interactive "r")
-  (shell-command-on-region b e "xargs -0 html-elm" (current-buffer) t))
-
-
-(use-package hippie-exp
-    :ensure nil
-    :defer t
-    :bind ("<C-return>" . hippie-expand)
-    :config
-    (setq-default hippie-expand-try-functions-list
-                  '(yas-hippie-try-expand
-                    emmet-hippie-try-expand-line
-                    elm-emmet-expand-line)))
-
-
-;; Add yasnippet support for all company backends
-(defvar company-mode/enable-yas t "Enable yasnippet for all backends.")
-
-(defun company-mode/backend-with-yas (backend)
-  (if (or (not company-mode/enable-yas)
-          (and (listp backend) (member 'company-yasnippet backend)))
-      backend
-    (append (if (consp backend) backend (list backend))
-            '(:with company-yasnippet))))
-
-(use-package yasnippet
-  :ensure t
-  :config
-
-  (setq yas-snippet-dirs
-        (append yas-snippet-dirs '("~/dotfiles/yasnippets")))
-  (yas-global-mode 1)
-  (yas-reload-all)
-
-  (setq company-backends
-        (mapcar #'company-mode/backend-with-yas company-backends))
-
-  (unbind-key "TAB" yas-minor-mode-map)
-  (unbind-key "<tab>" yas-minor-mode-map)
-
-  (use-package yasnippet-snippets :ensure t)
-  (use-package elm-yasnippets :ensure t))
 ;;
 ;; Load tree view package
 ;;
@@ -428,10 +345,13 @@ or the current buffer directory."
       (when filepath
         (neotree-find filepath)))))
 
+
 (use-package neotree
   :ensure t
   :config
   (setq neo-window-fixed-size nil)
+  (setq neo-window-width 30)
+
   (evil-leader/set-key
     "m" 'my-neotree-project-dir-toggle)
 
@@ -451,9 +371,9 @@ or the current buffer directory."
                 'neotree-create-node)
               (define-key evil-normal-state-local-map (kbd "d")
                 'neotree-delete-node)
-              (define-key evil-normal-state-local-map (kbd "s")
+              (define-key evil-normal-state-local-map (kbd "v")
                 'neotree-enter-vertical-split)
-              (define-key evil-normal-state-local-map (kbd "S")
+              (define-key evil-normal-state-local-map (kbd "s")
                 'neotree-enter-horizontal-split)
 
               (define-key evil-normal-state-local-map (kbd "RET")
@@ -489,33 +409,6 @@ or the current buffer directory."
 (defvar smartparens-mode-original-value)
 
 
-(defun disable-sp-hippie-advice (&rest _)
-  (setq smartparens-mode-original-value smartparens-mode)
-  (setq smartparens-mode nil) t)
-
-;; This advice could be added to other functions that usually insert
-;; balanced parens, like `try-expand-list'.
-(advice-add 'yas-hippie-try-expand :after-while #'disable-sp-hippie-advice)
-
-(defun reenable-sp-hippie-advice (&rest _)
-  (when (boundp 'smartparens-mode-original-value)
-    (setq smartparens-mode smartparens-mode-original-value)
-    (makunbound 'smartparens-mode-original-value)))
-
-(advice-add 'hippie-expand :after #'reenable-sp-hippie-advice
-            ;; Set negative depth to make sure we go after
-            ;; `sp-auto-complete-advice'.
-            '((depth . -100)))
-
-;;
-;; Syntax and language modes
-;;
-(add-hook 'find-file-hook
-          (lambda ()
-            (when (string= (file-name-extension buffer-file-name) "erb")
-              (yas-activate-extra-mode 'erb-mode))))
-
-
 (use-package web-mode
   :ensure t
   :config
@@ -529,41 +422,16 @@ or the current buffer directory."
   (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.tsx" . web-mode))
 
-  (add-hook
-   'web-mode-hook
-   (lambda ()
-     (when (string-equal "tsx" (file-name-extension buffer-file-name))
-       (tide-setup))))
-
   (use-package company-web
     :ensure t
     :config
     (require 'company-web-html)))
 
 
-(use-package typescript-mode
-  :ensure t
-  :config
-  (add-hook 'typescript-mode-hook 'tide-setup))
+(use-package typescript-mode :ensure t)
 
 
-(use-package tide
-  :ensure t
-  :config
-  ;; (setq tide-format-options
-  ;;       '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t
-  ;;         :indentSize 2
-  ;;         :placeOpenBraceOnNewLineForFunctions nil))
-
-  (add-hook 'tide-mode-hook 'flycheck-mode)
-  (add-hook 'tide-mode-hook 'tide-hl-identifier-mode)
-  (add-hook 'tide-mode-hook 'eldoc-mode)
-
-  :after
-  (typescript-mode company flycheck)
-
-  :hook
-  ((before-save . tide-format-before-save)))
+(use-package graphql-mode :ensure t)
 
 
 (use-package emmet-mode
@@ -602,8 +470,10 @@ or the current buffer directory."
 (use-package elm-mode
   :ensure t
   :config
+
   (progn
     (add-hook 'elm-mode-hook 'elm-format-on-save-mode)
+    (add-hook 'elm-mode-hook (lambda () (eldoc-mode -1)))
     (setenv "PATH"
             (concat
              (getenv "HOME") "/.yarn/bin" ":"
@@ -647,17 +517,32 @@ or the current buffer directory."
   :hook ((elm-mode . eglot-ensure))
   :config
 
+  (setq eglot-connect-timeout nil)
+
   (evil-leader/set-key
     "ea" 'eglot-code-actions
+    "ef" 'flymake-mode
     "er" 'eglot-rename
+    "eh" 'eldoc
     "ed" 'flymake-show-buffer-diagnostics
     "gd" 'xref-find-definitions
     "gr" 'xref-find-references
     "gp" 'xref-prev-line
-    "gn" 'xref-next-line))
+    "gn" 'xref-next-line)
+
+  (set-face-attribute 'flymake-error nil
+                      :underline 'unspecified
+                      :inherit 'unspecified)
+
+  ;; Disable documentation on hover
+  (global-eldoc-mode -1)
+  )
+
+(use-package taskrunner :ensure t)
+
+(use-package ivy-taskrunner :load-path "~/emacs")
 
 (use-package restclient :ensure t)
-
 ;;
 ;; Ligatures
 ;;

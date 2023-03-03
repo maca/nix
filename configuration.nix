@@ -1,5 +1,7 @@
-{ config, pkgs, lib, callPackage, ... }:
+{ config, pkgs, lib, ... }:
 {
+  # hammerspoon = pkgs.callPackage ./apps/hammerspoon.nix { };
+
   nix.configureBuildUsers = true;
 
   # Enable experimental nix command and flakes
@@ -23,8 +25,11 @@
 
 
   environment.systemPackages = with pkgs; [
+    pkgs.emacs
     pkgs.pam-reattach
     terminal-notifier
+    ninja
+    shake
   ];
 
 

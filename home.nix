@@ -2,41 +2,37 @@
 
 let
   extraNodePackages = import ./node/default.nix {};
-
-  emacs = pkgs.emacsPgtk;
-  # emacs = pkgs.emacsPgtk.overrideAttrs (old: {
-  #   patches =
-  #     (old.patches or [])
-  #     ++ [
-  #       # Fix OS window role (needed for window managers like yabai)
-  #       (pkgs.fetchpatch {
-  #         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
-  #         sha256 = "0c41rgpi19vr9ai740g09lka3nkjk48ppqyqdnncjrkfgvm2710z";
-  #       })
-
-  #       # Use poll instead of select to get file descriptors
-  #       (pkgs.fetchpatch {
-  #         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/poll.patch";
-  #         sha256 = "0j26n6yma4n5wh4klikza6bjnzrmz6zihgcsdx36pn3vbfnaqbh5";
-  #       })
-
-  #       # Enable rounded window with no decoration
-  #       (pkgs.fetchpatch {
-  #         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/round-undecorated-frame.patch";
-  #         sha256 = "111i0r3ahs0f52z15aaa3chlq7ardqnzpwp8r57kfsmnmg6c2nhf";
-  #       })
-
-  #       # Make Emacs aware of OS-level light/dark mode
-  #       (pkgs.fetchpatch {
-  #         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
-  #         sha256 = "14ndp2fqqc95s70fwhpxq58y8qqj4gzvvffp77snm2xk76c1bvnn";
-  #       })
-  #     ];
-  # });
-
 in
 {
   home.stateVersion = "22.11";
+
+  home.sessionVariables = {
+    EDITOR = "hx";
+  };
+
+  programs.helix = {
+    enable = true;
+    settings = {
+      theme = "ayu_mirage";
+      editor = {
+        line-number = "relative";        
+        idle-timeout = 400;
+        rulers = [ 80 90 ];
+        indent-guides = {
+          render = true;
+          character = "|";
+        };
+      };
+      keys = {
+        normal = {
+          space.t.d = ":theme ayu_mirage";
+          space.t.l = ":theme ayu_light";
+          space.c.f = ":format";
+          space.c.o = ":sh gh repo view --web";
+        };
+      };
+    };
+  };
 
 
   programs.direnv = {
@@ -56,7 +52,7 @@ in
     package = pkgs.emacsWithPackagesFromUsePackage {
       config = "/Users/macarioortega/nix-home/emacs.el";
       defaultInitFile = true;
-      package = emacs;
+      package = pkgs.emacsPgtk;
       alwaysTangle = true;
     };
   };
@@ -257,6 +253,7 @@ in
     silver-searcher
     difftastic
     lazygit
+    gh
 
     jq
 

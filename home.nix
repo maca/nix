@@ -15,7 +15,7 @@ in
     settings = {
       theme = "ayu_mirage";
       editor = {
-        line-number = "relative";        
+        line-number = "relative";
         idle-timeout = 400;
         rulers = [ 80 90 ];
         indent-guides = {
@@ -72,32 +72,14 @@ in
   };
 
 
-  programs.fish = {
-    enable = true;
-    plugins = [
-      # Need this when using Fish as a default macOS shell in order to pick
-      # up ~/.nix-profile/bin
-      {
-        name = "nix-env";
-        src = pkgs.fetchFromGitHub {
-          owner = "lilyball";
-          repo = "nix-env.fish";
-          rev = "00c6cc762427efe08ac0bd0d1b1d12048d3ca727";
-          sha256 = "1hrl22dd0aaszdanhvddvqz3aq40jp9zi2zn0v1hjnf7fx4bgpma";
-        };
-      }
-    ];
-    shellAliases = {
-      emacs = "${pkgs.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs";
-      e = "emacsclient";
-    };
-  };
-
-
   programs.zsh = {
     enable = true;
     shellAliases = {
       emacs = "${pkgs.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs";
+    };
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "fzf" "ssh-agent" "pass" "emoji" "transfer" "tmux" ];
     };
     sessionVariables = {
       EDITOR = "hx";

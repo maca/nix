@@ -79,12 +79,19 @@ in
     };
     oh-my-zsh = {
       enable = true;
-      plugins = [ "fzf" "ssh-agent" "pass" "emoji" "transfer" "tmux" ];
-    };
+      plugins = [ "fzf" "ssh-agent" "pass" "emoji" "transfer" ];
+    }; 
     sessionVariables = {
       EDITOR = "hx";
     };
+    defaultKeymap = "viins";
   };
+
+
+  # programs.zplug = {
+  #   enable = true;
+  #   plugins = [ "forgit" ];
+  # };
 
 
   programs.tmux = {
@@ -95,11 +102,10 @@ in
     historyLimit = 10000;
     keyMode = "vi";
     mouse = true;
-    shell = "\${pkgs.zsh}/bin/zsh";
+    shell = "/bin/zsh";
     secureSocket = true;
-    extraConfig = ''
-      # instructs tmux to expect UTF-8 sequences
-      setw -g utf8 on
+    extraConfig = '' 
+      set-option -g default-shell /bin/zsh
 
       # default terminal
       set -g default-terminal "xterm-256color"
@@ -108,7 +114,6 @@ in
       # Set window notifications
       setw -g monitor-activity on
       set -g visual-activity on
-      set -g visual-content on
 
       # cycle through panes
       bind-key -r Space select-pane -t :.+
@@ -129,6 +134,7 @@ in
       bind-key -r Tab rotate-window
       bind-key -r J next-window
       bind-key -r K previous-window
+
       # last window
       bind-key a last-window
 
@@ -137,8 +143,6 @@ in
       bind s split-window -v
       bind v split-window -h
       bind S list-sessions
-
-      bind -n WheelUpPane copy-mode
     '';
   };
 
@@ -172,7 +176,6 @@ in
       gitlab.user = "maca";
 
       core.excludesfile = "~/.gitignore";
-      # merge.conflictStyle = "diff3";
     };
   };
 
@@ -191,6 +194,7 @@ in
     ".emacs.el".source = "/Users/macarioortega/nix-home/emacs.el";
     "emacs/ligature.el".source = "/Users/macarioortega/nix-home/emacs/ligature.el";
     "emacs/ivy-taskrunner.el".source = "/Users/macarioortega/nix-home/emacs/ivy-taskrunner.el";
+    ".config/helix/runtime/elm/textobjects.scm".source = "/Users/macarioortega/nix-home/helix/runtime/queries/elm/textobjects.scm";
   };
 
 

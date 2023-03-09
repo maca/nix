@@ -16,8 +16,9 @@
 
   programs.bash.enable = true;
   programs.zsh.enable = true;
-  environment.shells = with pkgs; [ bashInteractive zsh ];
 
+  environment.shells = with pkgs; [ bashInteractive zsh ];
+  environment.pathsToLink = [ "/share/zsh" ];
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;

@@ -2,16 +2,20 @@
 
 let
   extraNodePackages = import ./node/default.nix {};
+  helix = (pkgs.callPackage ./helix.nix { });
 in
 {
   home.stateVersion = "23.05";
 
+
   home.sessionVariables = {
     EDITOR = "hx";
   };
+ 
 
   programs.helix = {
     enable = true;
+    package = helix;
     settings = {
       theme = "ayu_mirage";
       editor = {
@@ -22,19 +26,23 @@ in
           render = true;
           character = "|";
         };
-      };
+      }; 
       keys = {
         normal = {
           space.t.d = ":theme ayu_mirage";
           space.t.l = ":theme ayu_light";
           space.c.f = ":format";
           space.c.o = ":sh gh repo view --web";
+          D = "kill_to_line_end";
         };
       };
-    };
+    }; 
   };
 
 
+  programs.browserpass.enable = true;
+
+  
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
@@ -85,6 +93,15 @@ in
       EDITOR = "hx";
     };
     defaultKeymap = "viins";
+    profileExtra = '' 
+    if [[ -f /opt/homebrew/bin/brew ]]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"    
+    fi
+
+    path=('/Users/macarioortega/.cargo/bin' $path)
+    # export to sub-processes (make it inherited by child processes)
+    export PATH
+    '';
   };
 
 
@@ -195,27 +212,33 @@ in
     "emacs/ligature.el".source = "/Users/macarioortega/nix-home/emacs/ligature.el";
     "emacs/ivy-taskrunner.el".source = "/Users/macarioortega/nix-home/emacs/ivy-taskrunner.el";
     ".config/helix/runtime/elm/textobjects.scm".source = "/Users/macarioortega/nix-home/helix/runtime/queries/elm/textobjects.scm";
+    ".config/helix/languages.toml".text = ''
+      [[language]]
+      name = "elm"
+      formatter = { command = "elm-format", args = ["--stdin"] }
+      '';
   };
 
 
   home.packages = with pkgs; [
     coreutils
-    curl
-    wget
-    gnupg
-    fzf
-    fd
-    silver-searcher
-    difftastic
-    lazygit
-    gitui
-    gh
+    curl wget gnupg
+    fzf fd silver-searcher
+    difftastic lazygit gitui gh
+    nil # nix language server
+    zplug
+    cargo
 
-    jq
+    pgcli
+    jq yq
 
+    # JS stuff
     nodejs
     yarn
 
+    stack
+
+    # Elm stuff
     elmPackages.elm
     elmPackages.elm-language-server
 

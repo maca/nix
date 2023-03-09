@@ -1,8 +1,7 @@
-{ config, pkgs, lib,  ... }:
+{ config, pkgs, lib, ... }:
 
 let
-  extraNodePackages = import ./node/default.nix {};
-  helix = (pkgs.callPackage ./helix.nix { });
+  extraNodePackages = import ./node/default.nix { };
 in
 {
   home.stateVersion = "23.05";
@@ -11,11 +10,12 @@ in
   home.sessionVariables = {
     EDITOR = "hx";
   };
- 
+
+
 
   programs.helix = {
     enable = true;
-    package = helix;
+    package = (pkgs.callPackage ./helix.nix { });
     settings = {
       theme = "ayu_mirage";
       editor = {
@@ -26,7 +26,7 @@ in
           render = true;
           character = "|";
         };
-      }; 
+      };
       keys = {
         normal = {
           space.t.d = ":theme ayu_mirage";
@@ -36,13 +36,13 @@ in
           D = "kill_to_line_end";
         };
       };
-    }; 
+    };
   };
 
 
   programs.browserpass.enable = true;
 
-  
+
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
@@ -88,7 +88,21 @@ in
     oh-my-zsh = {
       enable = true;
       plugins = [ "fzf" "ssh-agent" "pass" "emoji" "transfer" ];
-    }; 
+    };
+    zplug = {
+      enable = true;
+      plugins = [
+        {
+          name = "wfxr/forgit";
+          tags = [ ];
+        }
+        {
+          name = "g-plane/zsh-yarn-autocompletions";
+          tags = [ ''hook-build:"./zplug.zsh", defer:2'' ];
+        }
+      ];
+      zplugHome = "/Users/macarioortega/.config/zplug";
+    };
     sessionVariables = {
       EDITOR = "hx";
     };
@@ -103,12 +117,6 @@ in
     export PATH
     '';
   };
-
-
-  # programs.zplug = {
-  #   enable = true;
-  #   plugins = [ "forgit" ];
-  # };
 
 
   programs.tmux = {
@@ -166,7 +174,7 @@ in
 
   programs.git = {
     enable = true;
-    userName  = "Macario Ortega";
+    userName = "Macario Ortega";
     userEmail = "maca@aelita.io";
 
     aliases = {
@@ -180,10 +188,10 @@ in
       d = "difftool";
     };
 
-    ignores = ["*.swp"];
+    ignores = [ "*.swp" ];
     extraConfig = {
       pull.ff = "only";
-      init = {defaultBranch = "main";};
+      init = { defaultBranch = "main"; };
       pager.difftool = true;
 
       diff.tool = "difftastic";
@@ -216,21 +224,36 @@ in
       [[language]]
       name = "elm"
       formatter = { command = "elm-format", args = ["--stdin"] }
-      '';
+
+      [[language]]
+      name = "nix"
+      auto-format = true
+      formatter = { command = "nixpkgs-fmt", args = [] }
+    '';
   };
 
 
   home.packages = with pkgs; [
     coreutils
-    curl wget gnupg
-    fzf fd silver-searcher
-    difftastic lazygit gitui gh
-    nil # nix language server
+    curl
+    wget
+    gnupg
+    fzf
+    fd
+    silver-searcher
+    difftastic
+    delta
+    lazygit
+    gitui
+    gh
+    nixpkgs-fmt
+    nil
     zplug
     cargo
 
     pgcli
-    jq yq
+    jq
+    yq
 
     # JS stuff
     nodejs

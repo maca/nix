@@ -7,12 +7,6 @@ in
   home.stateVersion = "23.05";
 
 
-  home.sessionVariables = {
-    EDITOR = "hx";
-  };
-
-
-
   programs.helix = {
     enable = true;
     package = (pkgs.callPackage ./helix.nix { });
@@ -40,6 +34,17 @@ in
   };
 
 
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacsWithPackagesFromUsePackage {
+      config = "/Users/macarioortega/nix-home/emacs.el";
+      defaultInitFile = true;
+      package = pkgs.emacsPgtk;
+      alwaysTangle = true;
+    };
+  };
+
+
   programs.browserpass.enable = true;
 
 
@@ -55,17 +60,6 @@ in
   };
 
 
-  programs.emacs = {
-    enable = true;
-    package = pkgs.emacsWithPackagesFromUsePackage {
-      config = "/Users/macarioortega/nix-home/emacs.el";
-      defaultInitFile = true;
-      package = pkgs.emacsPgtk;
-      alwaysTangle = true;
-    };
-  };
-
-
   programs.starship = {
     enable = true;
     settings = {
@@ -77,6 +71,11 @@ in
         format = "[$time]($style)";
       };
     };
+  };
+
+
+  home.sessionVariables = {
+    EDITOR = "vim";
   };
 
 
@@ -102,9 +101,6 @@ in
         }
       ];
       zplugHome = "/Users/macarioortega/.config/zplug";
-    };
-    sessionVariables = {
-      EDITOR = "hx";
     };
     defaultKeymap = "viins";
     profileExtra = '' 
@@ -259,6 +255,7 @@ in
     nodejs
     yarn
 
+    vimv
     stack
 
     # Elm stuff

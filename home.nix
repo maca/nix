@@ -128,7 +128,7 @@ in
     shell = "/bin/zsh";
     secureSocket = true;
     extraConfig = '' 
-      set-option -g default-shell /bin/zsh
+      setw -g automatic-rename on
 
       # default terminal
       set -g default-terminal "xterm-256color"
@@ -163,8 +163,9 @@ in
 
       # splitting windows
       unbind % # Remove default binding since we’re replacing
-      bind s split-window -v
-      bind v split-window -h
+      bind c new-window -c "#{pane_current_path}"
+      bind s split-window -v -c "#{pane_current_path}"
+      bind v split-window -h -c "#{pane_current_path}"
       bind S list-sessions
     '';
   };

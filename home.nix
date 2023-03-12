@@ -6,12 +6,11 @@ in
 {
   home.stateVersion = "23.05";
 
-
   programs.helix = {
     enable = true;
     package = (pkgs.callPackage ./helix.nix { });
     settings = {
-      theme = "ayu_mirage";
+      theme = "ayu_mirage_custom";
       editor = {
         line-number = "relative";
         idle-timeout = 400;
@@ -23,13 +22,16 @@ in
       };
       keys = {
         normal = {
-          space.t.d = ":theme ayu_mirage";
+          space.t.d = ":theme ayu_mirage_custom";
           space.t.l = ":theme ayu_light";
           space.c.f = ":format";
           space.c.o = ":sh gh repo view --web";
           D = "kill_to_line_end";
         };
       };
+    };
+    themes = {
+      ayu_mirage_custom = import ./helix/themes/ayu-mirage-custom.nix;
     };
   };
 
@@ -104,15 +106,15 @@ in
     };
     defaultKeymap = "viins";
     profileExtra = '' 
-    if [[ -f /opt/homebrew/bin/brew ]]; then
-      eval "$(/opt/homebrew/bin/brew shellenv)"    
-    fi
+      if [[ -f /opt/homebrew/bin/brew ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"    
+      fi
 
-    path=('/Users/macarioortega/.cargo/bin' $path)
-    # export to sub-processes (make it inherited by child processes)
-    export PATH
+      path=('/Users/macarioortega/.cargo/bin' $path)
+      # export to sub-processes (make it inherited by child processes)
+      export PATH
 
-    bindkey "\e" vi-cmd-mode
+      bindkey "\e" vi-cmd-mode
     '';
   };
 

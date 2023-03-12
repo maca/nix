@@ -37,9 +37,9 @@
   # Fonts
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
-     recursive
-     (nerdfonts.override { fonts = [ "JetBrainsMono" "Inconsolata" ]; })
-   ];
+    recursive
+    (nerdfonts.override { fonts = [ "JetBrainsMono" "Inconsolata" ]; })
+  ];
 
 
   # Keyboard

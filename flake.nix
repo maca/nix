@@ -19,32 +19,32 @@
   };
 
   outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
-  let
-    inherit (darwin.lib) darwinSystem;
-    inherit (inputs.nixpkgs-unstable.lib) attrValues makeOverridable optionalAttrs singleton;
-  in
-  {
-    darwinConfigurations = rec {
-      VNDR-A436 = darwinSystem {
-        system = "aarch64-darwin";
+    let
+      inherit (darwin.lib) darwinSystem;
+      inherit (inputs.nixpkgs-unstable.lib) attrValues makeOverridable optionalAttrs singleton;
+    in
+    {
+      darwinConfigurations = rec {
+        VNDR-A436 = darwinSystem {
+          system = "aarch64-darwin";
 
-        modules = [
-          ./configuration.nix
+          modules = [
+            ./configuration.nix
 
-          home-manager.darwinModules.home-manager
-          {
-            nixpkgs = {
-              config = { allowUnfree = true; };
-              system = "aarch64-darwin";
-              overlays = [ inputs.emacs-overlay.overlay ];
-            };
+            home-manager.darwinModules.home-manager
+            {
+              nixpkgs = {
+                config = { allowUnfree = true; };
+                system = "aarch64-darwin";
+                overlays = [ inputs.emacs-overlay.overlay ];
+              };
 
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.macarioortega = import ./home.nix;
-          }
-        ];
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.macarioortega = import ./home.nix;
+            }
+          ];
+        };
       };
     };
-  };
 }

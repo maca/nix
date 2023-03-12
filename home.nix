@@ -10,7 +10,7 @@ in
     enable = true;
     package = (pkgs.callPackage ./helix.nix { });
     settings = {
-      theme = "ayu_mirage_custom";
+      theme = "dark";
       editor = {
         line-number = "relative";
         idle-timeout = 400;
@@ -19,11 +19,12 @@ in
           render = true;
           character = "|";
         };
+        color-modes = true;
       };
       keys = {
         normal = {
-          space.t.d = ":theme ayu_mirage_custom";
-          space.t.l = ":theme ayu_light";
+          space.t.d = ":theme dark";
+          space.t.l = ":theme light";
           space.c.f = ":format";
           space.c.o = ":sh gh repo view --web";
           D = "kill_to_line_end";
@@ -31,7 +32,20 @@ in
       };
     };
     themes = {
-      ayu_mirage_custom = import ./helix/themes/ayu-mirage-custom.nix;
+      dark = {
+        inherits = "ayu_mirage";
+        comment = { fg = "gray"; };
+        "ui.cursor" = { fg = "dark_gray"; bg = "blue"; };
+        "ui.cursor.primary" = { fg = "dark_gray"; bg = "orange"; };
+        "ui.cursor.primary.select" = { fg = "dark_gray"; bg = "dark_blue"; };
+      };
+      light = {
+        inherits = "ayu_light";
+        comment = { fg = "gray"; };
+        "ui.cursor" = { fg = "dark_gray"; bg = "blue"; };
+        "ui.cursor.primary" = { fg = "dark_gray"; bg = "orange"; };
+        "ui.cursor.primary.select" = { fg = "dark_gray"; bg = "dark_blue"; };
+      };
     };
   };
 

@@ -111,6 +111,8 @@ in
     path=('/Users/macarioortega/.cargo/bin' $path)
     # export to sub-processes (make it inherited by child processes)
     export PATH
+
+    bindkey "\e" vi-cmd-mode
     '';
   };
 

@@ -246,7 +246,6 @@ in
     ".emacs.el".source = "/Users/macarioortega/nix-home/emacs.el";
     "emacs/ligature.el".source = "/Users/macarioortega/nix-home/emacs/ligature.el";
     "emacs/ivy-taskrunner.el".source = "/Users/macarioortega/nix-home/emacs/ivy-taskrunner.el";
-    ".config/helix/runtime/elm/textobjects.scm".source = "/Users/macarioortega/nix-home/helix/runtime/queries/elm/textobjects.scm";
     ".config/helix/languages.toml".text = ''
       [[language]]
       name = "elm"

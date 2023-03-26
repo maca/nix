@@ -8,7 +8,19 @@ in
 
   programs.helix = {
     enable = true;
-    package = (pkgs.callPackage ./helix.nix { });
+    package = pkgs.helix.overrideAttrs (old:
+      let
+        version = "22.12";
+      in
+      {
+        version = version;
+        src = pkgs.fetchzip {
+          url = "https://github.com/helix-editor/helix/releases/download/${version}/helix-${version}-source.tar.xz";
+          sha256 = "sha256-En6SOyAPNPPzDGdm2XTjbGG0NQFGBVzjjoyCbdnHFao=";
+          stripRoot = false;
+        };
+      });
+
     settings = {
       theme = "dark";
       editor = {

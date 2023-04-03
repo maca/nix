@@ -281,10 +281,6 @@ in
     jq
     yq
 
-    # JS stuff
-    nodejs
-    yarn
-
     vimv
     stack
 
@@ -296,6 +292,11 @@ in
     extraNodePackages.elm-format
     extraNodePackages.elm-analyse
     extraNodePackages.elm-watch
+
+    # JS stuff
+    nodejs
+    yarn
+    nodePackages.typescript-language-server
   ] ++ lib.optionals stdenv.isDarwin [
     m-cli # useful macOS CLI commands
   ];

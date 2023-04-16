@@ -284,6 +284,10 @@ in
     vimv
     stack
 
+    podman
+    buildah
+    docker-compose
+
     # Elm stuff
     elmPackages.elm
     elmPackages.elm-language-server

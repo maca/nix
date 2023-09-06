@@ -2,6 +2,19 @@
 
 let
   extraNodePackages = import ./node/default.nix { };
+
+  elm-language-server = pkgs.elmPackages.elm-language-server.overrideAttrs (old:
+    let
+      version = "2.7.0";
+    in
+    {
+      version = version;
+      src = pkgs.fetchzip {
+        url = "https://github.com/elm-tooling/elm-language-server/archive/refs/tags/${version}.tar.gz";
+        sha256 = "sha256-HkfdMN3HzNmTAqkCki+CkuBSbYWUMW4CtNTMXU64zyg=";
+        stripRoot = false;
+      };
+    });
 in
 {
   home.stateVersion = "23.05";
@@ -10,13 +23,13 @@ in
     enable = true;
     package = pkgs.helix.overrideAttrs (old:
       let
-        version = "22.12";
+        version = "23.03";
       in
       {
         version = version;
         src = pkgs.fetchzip {
           url = "https://github.com/helix-editor/helix/releases/download/${version}/helix-${version}-source.tar.xz";
-          sha256 = "sha256-En6SOyAPNPPzDGdm2XTjbGG0NQFGBVzjjoyCbdnHFao=";
+          sha256 = "sha256-FtY2V7za3WGeUaC2t2f63CcDUEg9zAS2cGUWI0YeGwk=";
           stripRoot = false;
         };
       });
@@ -50,6 +63,7 @@ in
         "ui.cursor" = { fg = "dark_gray"; bg = "blue"; };
         "ui.cursor.primary" = { fg = "dark_gray"; bg = "orange"; };
         "ui.cursor.primary.select" = { fg = "dark_gray"; bg = "dark_blue"; };
+        "diagnostic.error" = { underline = { style = "curl"; }; };
       };
       light = {
         inherits = "ayu_light";
@@ -57,6 +71,7 @@ in
         "ui.cursor" = { fg = "dark_gray"; bg = "blue"; };
         "ui.cursor.primary" = { fg = "dark_gray"; bg = "orange"; };
         "ui.cursor.primary.select" = { fg = "dark_gray"; bg = "dark_blue"; };
+        "diagnostic.error" = { underline = { style = "curl"; }; };
       };
     };
   };
@@ -98,6 +113,7 @@ in
         style = "bright-black";
         format = "[$time]($style)";
       };
+
     };
   };
 
@@ -136,7 +152,7 @@ in
         eval "$(/opt/homebrew/bin/brew shellenv)"    
       fi
 
-      path=('/Users/macarioortega/.cargo/bin' $path)
+      # path=('/Users/macarioortega/.cargo/bin' $path)
       # export to sub-processes (make it inherited by child processes)
       export PATH
 
@@ -192,10 +208,10 @@ in
       # splitting windows
       unbind % # Remove default binding since we’re replacing
       bind c new-window -c "#{pane_current_path}"
-      bind s split-window -v -c "#{pane_current_path}"
-      bind v split-window -h -c "#{pane_current_path}"
-      bind S list-sessions
-    '';
+          bind s split-window -v -c "#{pane_current_path}"
+          bind v split-window -h -c "#{pane_current_path}"
+          bind S list-sessions
+          '';
   };
 
 
@@ -275,22 +291,36 @@ in
     nixpkgs-fmt
     nil
     zplug
-    cargo
+    # cargo
+    cloc
+
+    heroku
+
+    shared-mime-info
+    (ruby.withPackages (ps: with ps; [ nokogiri pry pg rails minitest ]))
+    ffmpeg
+    imagemagick
+
 
     pgcli
     jq
     yq
+    postgresql
 
     vimv
+
     stack
 
     podman
+    qemu
     buildah
     docker-compose
 
     # Elm stuff
     elmPackages.elm
-    elmPackages.elm-language-server
+    elmPackages.elm-doc-preview
+    elmPackages.elm-live
+    elm-language-server
 
     extraNodePackages.elm-test
     extraNodePackages.elm-format
@@ -298,10 +328,16 @@ in
     extraNodePackages.elm-watch
 
     # JS stuff
-    nodejs
+    # nodejs
+    nodejs_20
     yarn
     nodePackages.typescript-language-server
+    yarn2nix
+    node2nix
+
+    nodePackages.ts-node
   ] ++ lib.optionals stdenv.isDarwin [
     m-cli # useful macOS CLI commands
   ];
 }
+

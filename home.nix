@@ -52,7 +52,6 @@ in
           space.t.l = ":theme light";
           space.c.f = ":format";
           space.c.o = ":sh gh repo view --web";
-          D = "kill_to_line_end";
         };
       };
     };
@@ -62,7 +61,7 @@ in
         comment = { fg = "gray"; };
         "ui.cursor" = { fg = "dark_gray"; bg = "blue"; };
         "ui.cursor.primary" = { fg = "dark_gray"; bg = "orange"; };
-        "ui.cursor.primary.select" = { fg = "dark_gray"; bg = "dark_blue"; };
+        "ui.cursor.match" = { fg = "dark_gray"; bg = "blue"; };
         "diagnostic.error" = { underline = { style = "curl"; }; };
       };
       light = {
@@ -70,7 +69,7 @@ in
         comment = { fg = "gray"; };
         "ui.cursor" = { fg = "dark_gray"; bg = "blue"; };
         "ui.cursor.primary" = { fg = "dark_gray"; bg = "orange"; };
-        "ui.cursor.primary.select" = { fg = "dark_gray"; bg = "dark_blue"; };
+        "ui.cursor.match" = { fg = "dark_gray"; bg = "blue"; };
         "diagnostic.error" = { underline = { style = "curl"; }; };
       };
     };
@@ -300,6 +299,8 @@ in
     (ruby.withPackages (ps: with ps; [ nokogiri pry pg rails minitest ]))
     ffmpeg
     imagemagick
+    graphviz
+    vimv
 
 
     pgcli

@@ -21,18 +21,19 @@ in
 
   programs.helix = {
     enable = true;
-    package = pkgs.helix.overrideAttrs (old:
-      let
-        version = "23.03";
-      in
-      {
-        version = version;
-        src = pkgs.fetchzip {
-          url = "https://github.com/helix-editor/helix/releases/download/${version}/helix-${version}-source.tar.xz";
-          sha256 = "sha256-FtY2V7za3WGeUaC2t2f63CcDUEg9zAS2cGUWI0YeGwk=";
-          stripRoot = false;
-        };
-      });
+
+    # package = pkgs.helix.overrideAttrs (old:
+    #   let
+    #     version = "23.03";
+    #   in
+    #   {
+    #     version = version;
+    #     src = pkgs.fetchzip {
+    #       url = "https://github.com/helix-editor/helix/releases/download/${version}/helix-${version}-source.tar.xz";
+    #       sha256 = "sha256-FtY2V7za3WGeUaC2t2f63CcDUEg9zAS2cGUWI0YeGwk=";
+    #       stripRoot = false;
+    #     };
+    #   });
 
     settings = {
       theme = "dark";
@@ -79,7 +80,7 @@ in
   programs.emacs = {
     enable = true;
     package = pkgs.emacsWithPackagesFromUsePackage {
-      config = "/Users/macarioortega/nix-home/emacs.el";
+      config = "/Users/maca/nix/emacs.el";
       defaultInitFile = true;
       package = pkgs.emacsPgtk;
       alwaysTangle = true;
@@ -143,7 +144,7 @@ in
           tags = [ ''hook-build:"./zplug.zsh", defer:2'' ];
         }
       ];
-      zplugHome = "/Users/macarioortega/.config/zplug";
+      zplugHome = "/Users/maca/.config/zplug";
     };
     defaultKeymap = "viins";
     profileExtra = '' 
@@ -151,7 +152,7 @@ in
         eval "$(/opt/homebrew/bin/brew shellenv)"    
       fi
 
-      # path=('/Users/macarioortega/.cargo/bin' $path)
+      # path=('/Users/maca/.cargo/bin' $path)
       # export to sub-processes (make it inherited by child processes)
       export PATH
 
@@ -250,7 +251,7 @@ in
   programs.password-store = {
     enable = true;
     settings = {
-      PASSWORD_STORE_DIR = "/Users/macarioortega/.password-store";
+      PASSWORD_STORE_DIR = "/Users/maca/.password-store";
       PASSWORD_STORE_CLIP_TIME = "60";
     };
     package = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
@@ -258,9 +259,9 @@ in
 
 
   home.file = {
-    ".emacs.el".source = "/Users/macarioortega/nix-home/emacs.el";
-    "emacs/ligature.el".source = "/Users/macarioortega/nix-home/emacs/ligature.el";
-    "emacs/ivy-taskrunner.el".source = "/Users/macarioortega/nix-home/emacs/ivy-taskrunner.el";
+    ".emacs.el".source = "/Users/maca/nix/emacs.el";
+    "emacs/ligature.el".source = "/Users/maca/nix/emacs/ligature.el";
+    "emacs/ivy-taskrunner.el".source = "/Users/maca/nix/emacs/ivy-taskrunner.el";
     ".config/helix/languages.toml".text = ''
       [[language]]
       name = "elm"

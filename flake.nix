@@ -25,7 +25,7 @@
     in
     {
       darwinConfigurations = rec {
-        VNDR-A436 = darwinSystem {
+        air.local = darwinSystem {
           system = "aarch64-darwin";
 
           modules = [

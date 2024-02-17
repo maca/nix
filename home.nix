@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }:
 
 let
-  # extraNodePackages = import ./node/default.nix { };
-
   elm-language-server = pkgs.elmPackages.elm-language-server.overrideAttrs (old:
     let
       version = "2.7.0";
@@ -21,19 +19,6 @@ in
 
   programs.helix = {
     enable = true;
-
-    # package = pkgs.helix.overrideAttrs (old:
-    #   let
-    #     version = "23.03";
-    #   in
-    #   {
-    #     version = version;
-    #     src = pkgs.fetchzip {
-    #       url = "https://github.com/helix-editor/helix/releases/download/${version}/helix-${version}-source.tar.xz";
-    #       sha256 = "sha256-FtY2V7za3WGeUaC2t2f63CcDUEg9zAS2cGUWI0YeGwk=";
-    #       stripRoot = false;
-    #     };
-    #   });
 
     settings = {
       theme = "dark";

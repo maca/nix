@@ -1,19 +1,5 @@
 { config, pkgs, lib, ... }:
 
-let
-  elm-language-server = pkgs.elmPackages.elm-language-server.overrideAttrs (old:
-    let
-      version = "2.7.0";
-    in
-    {
-      version = version;
-      src = pkgs.fetchzip {
-        url = "https://github.com/elm-tooling/elm-language-server/archive/refs/tags/${version}.tar.gz";
-        sha256 = "sha256-HkfdMN3HzNmTAqkCki+CkuBSbYWUMW4CtNTMXU64zyg=";
-        stripRoot = false;
-      };
-    });
-in
 {
   home.stateVersion = "23.05";
 
@@ -310,9 +296,9 @@ in
     elmPackages.elm-test
     elmPackages.elm-format
     elmPackages.elm-analyse
-
-    elm-language-server
+    elmPackages.elm-language-server
     # extraNodePackages.elm-watch
+
 
     # JS stuff
     # nodejs

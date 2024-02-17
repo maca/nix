@@ -51,4 +51,10 @@
 
   # Add ability to used TouchID for sudo authentication
   security.pam.enableSudoTouchIdAuth = true;
+
+  # Homebrew packages
+  homebrew.enable = true;
+  homebrew.casks = [
+    "eloston-chromium"
+  ];
 }

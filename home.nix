@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  extraNodePackages = import ./node/default.nix { };
+  # extraNodePackages = import ./node/default.nix { };
 
   elm-language-server = pkgs.elmPackages.elm-language-server.overrideAttrs (old:
     let
@@ -322,12 +322,12 @@ in
     elmPackages.elm
     elmPackages.elm-doc-preview
     elmPackages.elm-live
-    elm-language-server
+    elmPackages.elm-test
+    elmPackages.elm-format
+    elmPackages.elm-analyse
 
-    extraNodePackages.elm-test
-    # extraNodePackages.elm-format
-    extraNodePackages.elm-analyse
-    extraNodePackages.elm-watch
+    elm-language-server
+    # extraNodePackages.elm-watch
 
     # JS stuff
     # nodejs

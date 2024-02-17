@@ -22,6 +22,7 @@
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
+  users.users.maca.home = "/Users/maca";
 
 
   environment.systemPackages = with pkgs; [

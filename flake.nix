@@ -25,7 +25,7 @@
     in
     {
       darwinConfigurations = rec {
-        air.local = darwinSystem {
+        air = darwinSystem {
           system = "aarch64-darwin";
 
           modules = [
@@ -41,7 +41,7 @@
 
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.macarioortega = import ./home.nix;
+              home-manager.users.maca = import ./home.nix;
             }
           ];
         };

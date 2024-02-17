@@ -325,7 +325,7 @@ in
     elm-language-server
 
     extraNodePackages.elm-test
-    extraNodePackages.elm-format
+    # extraNodePackages.elm-format
     extraNodePackages.elm-analyse
     extraNodePackages.elm-watch
 

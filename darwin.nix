@@ -28,6 +28,7 @@
   environment.systemPackages = with pkgs; [
     pkgs.emacs
     pkgs.pam-reattach
+    pkgs.shared-mime-info
     terminal-notifier
   ];
 

@@ -132,6 +132,7 @@
     '';
   };
 
+
   programs.ssh =
     {
       enable = true;
@@ -164,6 +165,7 @@
       # Set window notifications
       setw -g monitor-activity on
       set -g visual-activity on
+      set -s set-clipboard on
 
       # cycle through panes
       bind-key -r Space select-pane -t :.+
@@ -216,7 +218,8 @@
 
     ignores = [ "*.swp" ];
     extraConfig = {
-      pull.ff = "only";
+      pull.rebase = "true";
+
       init = { defaultBranch = "main"; };
       pager.difftool = true;
 

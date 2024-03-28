@@ -265,6 +265,7 @@
     zplug
     # cargo
     cloc
+    ssh-copy-id
 
     heroku
 

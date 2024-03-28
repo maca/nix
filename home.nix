@@ -311,6 +311,9 @@
     node2nix
 
     nodePackages.ts-node
+
+    # Elixir
+    elixir_1_16
   ] ++ lib.optionals stdenv.isDarwin [
     m-cli # useful macOS CLI commands
   ];

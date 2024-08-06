@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
 {
-  home.stateVersion = "23.05";
+  home.stateVersion = "24.05";
 
   programs.helix = {
     enable = true;
@@ -48,15 +48,16 @@
   };
 
 
-  programs.emacs = {
-    enable = true;
-    package = pkgs.emacsWithPackagesFromUsePackage {
-      config = "/Users/maca/nix/emacs.el";
-      defaultInitFile = true;
-      package = pkgs.emacsPgtk;
-      alwaysTangle = true;
-    };
-  };
+
+  # programs.emacs = {
+  #   enable = true;
+  #   package = pkgs.emacsWithPackagesFromUsePackage {
+  #     config = "/Users/maca/nix/emacs.el";
+  #     defaultInitFile = true;
+  #     package = pkgs.emacs-pgtk;
+  #     alwaysTangle = true;
+  #   };
+  # };
 
 
   programs.browserpass.enable = true;
@@ -90,14 +91,15 @@
 
 
   home.sessionVariables = {
-    EDITOR = "vim";
+    EDITOR = "hx";
+    LOCALE = "LANG=en_US.UTF-8";
   };
 
 
   programs.zsh = {
     enable = true;
     shellAliases = {
-      emacs = "${pkgs.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs";
+      # emacs = "${pkgs.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs";
       ls = "ls --color";
     };
     oh-my-zsh = {
@@ -245,9 +247,10 @@
 
 
   home.file = {
-    ".emacs.el".source = "/Users/maca/nix/emacs.el";
-    "emacs/ligature.el".source = "/Users/maca/nix/emacs/ligature.el";
-    "emacs/ivy-taskrunner.el".source = "/Users/maca/nix/emacs/ivy-taskrunner.el";
+    # ".emacs.el".source = "/Users/maca/nix/emacs.el";
+    # "emacs/ligature.el".source = "/Users/maca/nix/emacs/ligature.el";
+    # "emacs/ivy-taskrunner.el".source = "/Users/maca/nix/emacs/ivy-taskrunner.el";
+
     ".config/helix/languages.toml".text = ''
       [[language]]
       name = "elm"
@@ -257,6 +260,58 @@
       name = "nix"
       auto-format = true
       formatter = { command = "nixpkgs-fmt", args = [] }
+    '';
+
+    ".config/kitty/kitty.conf".text = ''
+      font_family Inconsolata
+      font_size 15
+
+      background_opacity 0.8
+      background_blur 16
+
+      window_margin_width 4
+      single_window_margin_width 0
+      active_border_color   #d0d0d0
+      inactive_border_color #202020
+
+      hide_window_decorations titlebar-only
+
+      tab_bar_style powerline
+      tab_powerline_style slanted
+
+      confirm_os_window_close 0
+
+      background            #202020
+      foreground            #d0d0d0
+      cursor                #d0d0d0
+      selection_background  #303030
+      color0                #151515
+      color8                #505050
+      color1                #ac4142
+      color9                #ac4142
+      color2                #7e8d50
+      color10               #7e8d50
+      color3                #e5b566
+      color11               #e5b566
+      color4                #6c99ba
+      color12               #6c99ba
+      color5                #9e4e85
+      color13               #9e4e85
+      color6                #7dd5cf
+      color14               #7dd5cf
+      color7                #d0d0d0
+      color15               #f5f5f5
+      selection_foreground  #202020
+
+      enable_audio_bell no
+      bell_on_tab "🔔 "
+
+      map f1 new_window_with_cwd
+
+      detect_urls yes
+
+      macos_option_as_alt no
+      macos_option_as_alt right
     '';
   };
 

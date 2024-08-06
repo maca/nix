@@ -37,8 +37,7 @@
 
 
   # Fonts
-  fonts.fontDir.enable = true;
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     recursive
     (nerdfonts.override { fonts = [ "JetBrainsMono" "Inconsolata" ]; })
   ];
@@ -55,5 +54,6 @@
   homebrew.casks = [
     "eloston-chromium"
     "rawtherapee"
+    "kitty"
   ];
 }

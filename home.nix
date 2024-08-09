@@ -311,7 +311,7 @@
       detect_urls yes
 
       macos_option_as_alt no
-      macos_option_as_alt right
+      macos_option_as_alt left
     '';
   };
 

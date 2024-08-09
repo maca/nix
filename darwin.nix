@@ -55,5 +55,6 @@
     "eloston-chromium"
     "rawtherapee"
     "kitty"
+    "inkscape"
   ];
 }

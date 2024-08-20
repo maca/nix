@@ -385,7 +385,8 @@
     elixir_1_16
 
     # ETC
-    tesseract4
+    tesseract4 # OCR
+    ghostscript # Postcript interpreter
   ] ++ lib.optionals stdenv.isDarwin [
     m-cli # useful macOS CLI commands
   ];

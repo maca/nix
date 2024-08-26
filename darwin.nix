@@ -56,5 +56,7 @@
     "rawtherapee"
     "kitty"
     "inkscape"
+    "xnviewmp"
+    "pgp-suite"
   ];
 }

@@ -57,6 +57,5 @@
     "kitty"
     "inkscape"
     "xnviewmp"
-    "pgp-suite"
   ];
 }

@@ -231,6 +231,9 @@
       github.user = "maca";
       gitlab.user = "maca";
 
+      commit.gpgsign = true;
+      user.signingkey = "6BBF61F857AAD28F42320FE60973371CAB06A408";
+
       core.excludesfile = "~/.gitignore";
     };
   };

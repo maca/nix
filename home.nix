@@ -8,6 +8,7 @@
 
     settings = {
       theme = "dark";
+
       editor = {
         line-number = "relative";
         idle-timeout = 400;
@@ -18,6 +19,7 @@
         };
         color-modes = true;
       };
+
       keys = {
         normal = {
           space.t.d = ":theme dark";
@@ -27,6 +29,7 @@
         };
       };
     };
+
     themes = {
       dark = {
         inherits = "ayu_mirage";
@@ -36,6 +39,7 @@
         "ui.cursor.match" = { fg = "dark_gray"; bg = "blue"; };
         "diagnostic.error" = { underline = { style = "curl"; }; };
       };
+
       light = {
         inherits = "ayu_light";
         comment = { fg = "gray"; };
@@ -45,8 +49,21 @@
         "diagnostic.error" = { underline = { style = "curl"; }; };
       };
     };
-  };
 
+    languages = {
+      language = [
+        {
+          name = "elm";
+          formatter = { command = "elm-format"; args = [ "--stdin" ]; };
+        }
+        {
+          name = "nix";
+          auto-format = true;
+          formatter = { command = "nixpkgs-fmt"; args = [ ]; };
+        }
+      ];
+    };
+  };
 
 
   # programs.emacs = {
@@ -253,18 +270,6 @@
     # ".emacs.el".source = "/Users/maca/nix/emacs.el";
     # "emacs/ligature.el".source = "/Users/maca/nix/emacs/ligature.el";
     # "emacs/ivy-taskrunner.el".source = "/Users/maca/nix/emacs/ivy-taskrunner.el";
-
-    ".config/helix/languages.toml".text = ''
-      [[language]]
-      name = "elm"
-      formatter = { command = "elm-format", args = ["--stdin"] }
-
-      [[language]]
-      name = "nix"
-      auto-format = true
-      formatter = { command = "nixpkgs-fmt", args = [] }
-    '';
-
     ".config/kitty/kitty.conf".text = ''
       font_family Inconsolata
       font_size 15

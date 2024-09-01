@@ -4,7 +4,7 @@
   inputs = {
     # Package sets
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
-    nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # Environment/system management
     darwin.url = "github:lnl7/nix-darwin/master";
@@ -21,10 +21,9 @@
   outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
     let
       inherit (darwin.lib) darwinSystem;
-      inherit (inputs.nixpkgs-unstable.lib) attrValues makeOverridable optionalAttrs singleton;
     in
     {
-      darwinConfigurations = rec {
+      darwinConfigurations = {
         air = darwinSystem {
           system = "aarch64-darwin";
 

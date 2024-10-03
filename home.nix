@@ -378,6 +378,8 @@
     elmPackages.elm-language-server
     # extraNodePackages.elm-watch
 
+    redocly
+    marksman
 
     # JS stuff
     # nodejs

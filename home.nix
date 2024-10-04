@@ -57,6 +57,12 @@
           formatter = { command = "elm-format"; args = [ "--stdin" ]; };
         }
         {
+          name = "markdown";
+          auto-format = true;
+          formatter = { command = "dprint"; args = [ "fmt" "--stdin" "md" ]; };
+
+        }
+        {
           name = "nix";
           auto-format = true;
           formatter = { command = "nixpkgs-fmt"; args = [ ]; };
@@ -379,7 +385,11 @@
     # extraNodePackages.elm-watch
 
     redocly
+
     marksman
+    markdown-oxide
+    dprint
+    pandoc
 
     # JS stuff
     # nodejs
@@ -393,6 +403,9 @@
 
     # Elixir
     elixir_1_16
+
+    # Haskell
+    stack
 
     # ETC
     tesseract4 # OCR

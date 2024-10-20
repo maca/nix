@@ -413,6 +413,7 @@
     ghostscript # Postcript interpreter
     yt-dlp # Youtube/video downloader
     zbar # qrcode reader
+    retry
   ] ++ lib.optionals stdenv.isDarwin [
     m-cli # useful macOS CLI commands
   ];

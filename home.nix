@@ -382,7 +382,8 @@
     elmPackages.elm-format
     elmPackages.elm-analyse
     elmPackages.elm-language-server
-    # extraNodePackages.elm-watch
+    # elmPackages.elm-verify-examples
+    elmPackages.elm-review
 
     redocly
 
@@ -410,6 +411,8 @@
     # ETC
     tesseract4 # OCR
     ghostscript # Postcript interpreter
+    yt-dlp # Youtube/video downloader
+    zbar # qrcode reader
   ] ++ lib.optionals stdenv.isDarwin [
     m-cli # useful macOS CLI commands
   ];

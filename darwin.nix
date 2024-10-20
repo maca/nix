@@ -57,5 +57,6 @@
     "kitty"
     "inkscape"
     "xnviewmp"
+    "gimp"
   ];
 }

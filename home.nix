@@ -178,14 +178,16 @@
     historyLimit = 10000;
     keyMode = "vi";
     mouse = true;
-    shell = "/bin/zsh";
+    terminal = "xterm-256color";
+    shell = "${pkgs.zsh}/bin/zsh";
+    aggressiveResize = true;
+    sensibleOnTop = false;
+    customPaneNavigationAndResize = true;
+    resizeAmount = 3;
     secureSocket = true;
     extraConfig = '' 
       setw -g automatic-rename on
-
-      # default terminal
-      set -g default-terminal "xterm-256color"
-      setw -g aggressive-resize on
+      set -g default-command "$SHELL"
 
       # Set window notifications
       setw -g monitor-activity on
@@ -379,11 +381,12 @@
     elmPackages.elm-doc-preview
     elmPackages.elm-live
     elmPackages.elm-test
-    elmPackages.elm-format
-    elmPackages.elm-analyse
     elmPackages.elm-language-server
-    # elmPackages.elm-verify-examples
     elmPackages.elm-review
+    # elmPackages.elm-format
+    # elmPackages.elm-analyse
+    # elmPackages.elm-verify-examples
+    # ungoogled-chromium
 
     redocly
 
@@ -402,11 +405,12 @@
 
     nodePackages.ts-node
 
-    # Elixir
-    elixir_1_16
+    # BEAM
+    elixir
+    gleam
 
     # Haskell
-    stack
+    # stack
 
     # ETC
     tesseract4 # OCR

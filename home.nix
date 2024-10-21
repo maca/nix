@@ -36,7 +36,7 @@
         comment = { fg = "gray"; };
         "ui.cursor" = { fg = "dark_gray"; bg = "blue"; };
         "ui.cursor.primary" = { fg = "dark_gray"; bg = "orange"; };
-        "ui.cursor.match" = { fg = "dark_gray"; bg = "blue"; };
+        "ui.cursor.match" = { fg = "dark_gray"; bg = "gray"; };
         "diagnostic.error" = { underline = { style = "curl"; }; };
       };
 
@@ -45,7 +45,7 @@
         comment = { fg = "gray"; };
         "ui.cursor" = { fg = "dark_gray"; bg = "blue"; };
         "ui.cursor.primary" = { fg = "dark_gray"; bg = "orange"; };
-        "ui.cursor.match" = { fg = "dark_gray"; bg = "blue"; };
+        "ui.cursor.match" = { fg = "dark_gray"; bg = "gray"; };
         "diagnostic.error" = { underline = { style = "curl"; }; };
       };
     };
@@ -394,7 +394,7 @@
 
     # JS stuff
     # nodejs
-    nodejs_20
+    nodejs_22
     yarn
     nodePackages.typescript-language-server
     yarn2nix

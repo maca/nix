@@ -61,5 +61,6 @@
     "inkscape"
     "xnviewmp"
     "gimp"
+    "rsyncui"
   ];
 }

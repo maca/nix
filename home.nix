@@ -128,7 +128,15 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "fzf" "ssh-agent" "pass" "emoji" "transfer" ];
+      extraConfig = "zstyle :omz:plugins:ssh-agent identities id_rsa";
     };
+    plugins = [
+      {
+        name = "vi-mode";
+        src = pkgs.zsh-vi-mode;
+        file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+      }
+    ];
     zplug = {
       enable = true;
       plugins = [
@@ -143,17 +151,16 @@
       ];
       zplugHome = "/Users/maca/.config/zplug";
     };
+    initExtra = ''
+      PATH="$(${pkgs.yarn}/bin/yarn global bin):$PATH"
+    '';
     defaultKeymap = "viins";
     profileExtra = '' 
       if [[ -f /opt/homebrew/bin/brew ]]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"    
       fi
 
-      # path=('/Users/maca/.cargo/bin' $path)
-      # export to sub-processes (make it inherited by child processes)
       export PATH
-
-      bindkey "\e" vi-cmd-mode
     '';
   };
 
@@ -386,7 +393,6 @@
     # elmPackages.elm-format
     # elmPackages.elm-analyse
     # elmPackages.elm-verify-examples
-    # ungoogled-chromium
 
     redocly
 
@@ -418,6 +424,7 @@
     yt-dlp # Youtube/video downloader
     zbar # qrcode reader
     retry
+    httrack
   ] ++ lib.optionals stdenv.isDarwin [
     m-cli # useful macOS CLI commands
   ];

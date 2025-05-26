@@ -18,6 +18,11 @@
           character = "|";
         };
         color-modes = true;
+        end-of-line-diagnostics = "warning";
+        inline-diagnostics = {
+          # show warnings and errors on the cursorline inline
+          cursor-line = "hint";
+        };
       };
 
       keys = {

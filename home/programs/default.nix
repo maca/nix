@@ -8,5 +8,6 @@
     ./direnv.nix
     ./pass.nix
     ./kitty.nix
+    ./elm-language-server.nix
   ];
 }

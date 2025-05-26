@@ -54,7 +54,6 @@ userConfig: { pkgs, lib, ... }:
     elmPackages.elm-doc-preview
     elmPackages.elm-live
     elmPackages.elm-test
-    elmPackages.elm-language-server
     elmPackages.elm-review
     redocly
     marksman

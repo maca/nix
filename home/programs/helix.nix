@@ -56,6 +56,7 @@
         {
           name = "elm";
           formatter = { command = "elm-format"; args = [ "--stdin" ]; };
+          language-servers = [ "elm-language-server" ];
         }
         {
           name = "markdown";

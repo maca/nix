@@ -1,9 +1,5 @@
 { pkgs, lib, ... }:
 {
-  # hammerspoon = pkgs.callPackage ./apps/hammerspoon.nix { };
-
-  nix.configureBuildUsers = true;
-
   # Enable experimental nix command and flakes
   # nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''
@@ -21,12 +17,11 @@
   environment.pathsToLink = [ "/share/zsh" ];
 
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
   users.users.maca.home = "/Users/maca";
 
 
+
   environment.systemPackages = with pkgs; [
-    pkgs.emacs
     pkgs.pam-reattach
     pkgs.shared-mime-info
     terminal-notifier
@@ -36,26 +31,22 @@
     ##<- Docker stuff
   ];
 
-  ## Docker stuff
-  # services.docker.enable = true;
   programs.nix-index.enable = true;
 
 
-  # Fonts
-  fonts.packages = with pkgs; [
-    recursive
-    (nerdfonts.override { fonts = [ "JetBrainsMono" "Inconsolata" ]; })
+  fonts.packages = [
+    pkgs.nerd-fonts._0xproto
+    pkgs.nerd-fonts.droid-sans-mono
   ];
+
 
   system.stateVersion = 5;
   ids.gids.nixbld = 30000;
 
+  system.primaryUser = "maca";
   # Keyboard
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
-
-  # Add ability to used TouchID for sudo authentication
-  security.pam.enableSudoTouchIdAuth = true;
 
   # Homebrew packages
   homebrew.enable = true;

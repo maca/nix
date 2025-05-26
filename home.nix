@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
 {
-  home.stateVersion = "24.05";
+  home.stateVersion = "25.05";
 
   programs.helix = {
     enable = true;
@@ -71,18 +71,6 @@
     };
   };
 
-
-  # programs.emacs = {
-  #   enable = true;
-  #   package = pkgs.emacsWithPackagesFromUsePackage {
-  #     config = "/Users/maca/nix/emacs.el";
-  #     defaultInitFile = true;
-  #     package = pkgs.emacs-pgtk;
-  #     alwaysTangle = true;
-  #   };
-  # };
-
-
   programs.browserpass.enable = true;
 
 
@@ -122,7 +110,6 @@
   programs.zsh = {
     enable = true;
     shellAliases = {
-      # emacs = "${pkgs.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs";
       ls = "ls --color";
     };
     oh-my-zsh = {
@@ -151,7 +138,7 @@
       ];
       zplugHome = "/Users/maca/.config/zplug";
     };
-    initExtra = ''
+    initContent = ''
       PATH="$(${pkgs.yarn}/bin/yarn global bin):$PATH"
     '';
     defaultKeymap = "viins";
@@ -282,9 +269,6 @@
 
 
   home.file = {
-    # ".emacs.el".source = "/Users/maca/nix/emacs.el";
-    # "emacs/ligature.el".source = "/Users/maca/nix/emacs/ligature.el";
-    # "emacs/ivy-taskrunner.el".source = "/Users/maca/nix/emacs/ivy-taskrunner.el";
     ".config/kitty/kitty.conf".text = ''
       font_family Inconsolata
       font_size 15
@@ -362,7 +346,13 @@
     heroku
 
     shared-mime-info
-    (ruby.withPackages (ps: with ps; [ nokogiri pry pg rails minitest ]))
+    (ruby.withPackages (ps: with ps; [
+      nokogiri
+      pry
+      pg
+      rails
+      minitest
+    ]))
     ffmpeg
     imagemagick
     graphviz

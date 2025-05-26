@@ -11,11 +11,6 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
@@ -35,7 +30,6 @@
               nixpkgs = {
                 config = { allowUnfree = true; };
                 system = "aarch64-darwin";
-                overlays = [ inputs.emacs-overlay.overlay ];
               };
 
               home-manager.useGlobalPkgs = true;

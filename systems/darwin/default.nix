@@ -41,6 +41,21 @@
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
 
+
+  system.activationScripts.extraActivation.text = ''
+    echo "Configuring sticky keys with specific options..."
+    
+    /usr/bin/defaults write com.apple.universalaccess stickyKey -bool true
+    /usr/bin/defaults write com.apple.universalaccess stickyKeyBeepOnModifier -bool false
+    /usr/bin/defaults write com.apple.universalaccess stickyKeyShowWindow -bool true
+    /usr/bin/defaults write com.apple.universalaccess stickyKeyLock -bool false
+    /usr/bin/defaults write com.apple.universalaccess stickyKeyOnlyShiftCommandControl -bool true
+    
+    echo "Sticky keys configured. Visual feedback enabled, beeping disabled, lock behavior disabled."
+  '';
+
+
+
   # Homebrew configuration
   homebrew.enable = true;
   homebrew.casks = [

@@ -78,5 +78,6 @@ userConfig: { pkgs, lib, ... }:
     rclone
     rsync
     android-tools
+    claude-code
   ] ++ lib.optionals stdenv.isDarwin [ m-cli ];
 }

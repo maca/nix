@@ -30,9 +30,14 @@
     pkgs.pam-reattach
     pkgs.shared-mime-info
     terminal-notifier
+    ##-> Docker stuff
+    docker
+    colima
+    ##<- Docker stuff
   ];
 
-
+  ## Docker stuff
+  # services.docker.enable = true;
   programs.nix-index.enable = true;
 
 

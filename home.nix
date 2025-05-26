@@ -425,6 +425,9 @@
     zbar # qrcode reader
     retry
     httrack
+    rclone
+    rsync
+    android-tools
   ] ++ lib.optionals stdenv.isDarwin [
     m-cli # useful macOS CLI commands
   ];

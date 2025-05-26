@@ -1,7 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, userConfig, ... }:
 {
   # Enable experimental nix command and flakes
-  # nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''
     auto-optimise-store = true
     experimental-features = nix-command flakes
@@ -9,46 +8,40 @@
     extra-platforms = x86_64-darwin aarch64-darwin
   '';
 
-
   programs.bash.enable = true;
   programs.zsh.enable = true;
 
   environment.shells = with pkgs; [ bashInteractive zsh ];
   environment.pathsToLink = [ "/share/zsh" ];
 
-  # Auto upgrade nix package and the daemon service.
-  users.users.maca.home = "/Users/maca";
+  # Set primary user dynamically
+  system.primaryUser = userConfig.username;
 
-
-
+  # Base system packages
   environment.systemPackages = with pkgs; [
-    pkgs.pam-reattach
-    pkgs.shared-mime-info
+    pam-reattach
+    shared-mime-info
     terminal-notifier
-    ##-> Docker stuff
     docker
     colima
-    ##<- Docker stuff
   ];
 
   programs.nix-index.enable = true;
 
-
+  # Common fonts
   fonts.packages = [
     pkgs.nerd-fonts._0xproto
     pkgs.nerd-fonts.droid-sans-mono
   ];
 
-
   system.stateVersion = 5;
   ids.gids.nixbld = 30000;
 
-  system.primaryUser = "maca";
-  # Keyboard
+  # Keyboard settings
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
 
-  # Homebrew packages
+  # Homebrew configuration
   homebrew.enable = true;
   homebrew.casks = [
     "eloston-chromium"

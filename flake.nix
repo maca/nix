@@ -16,14 +16,24 @@
   outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
     let
       inherit (darwin.lib) darwinSystem;
+
+      # User configuration
+      userConfig = {
+        username = "maca";
+        fullName = "Macario Ortega";
+        email = "maca@aelita.io";
+        signingKey = "6BBF61F857AAD28F42320FE60973371CAB06A408";
+      };
     in
     {
       darwinConfigurations = {
         air = darwinSystem {
           system = "aarch64-darwin";
-
+          specialArgs = {
+            inherit userConfig;
+          };
           modules = [
-            ./darwin.nix
+            ./systems/darwin/default.nix
 
             home-manager.darwinModules.home-manager
             {
@@ -32,10 +42,12 @@
                 system = "aarch64-darwin";
               };
 
+              users.users.${userConfig.username}.home = "/Users/${userConfig.username}";
+
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
-              home-manager.users.maca = import ./home.nix;
+              home-manager.users.${userConfig.username} = import ./home/default.nix userConfig;
             }
           ];
         };

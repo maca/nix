@@ -7,16 +7,9 @@
     };
     oh-my-zsh = {
       enable = true;
-      plugins = [ "fzf" "ssh-agent" "pass" "emoji" "transfer" ];
+      plugins = [ "ssh-agent" "pass" "emoji" "transfer" "vi-mode" ];
       extraConfig = "zstyle :omz:plugins:ssh-agent identities id_rsa";
     };
-    plugins = [
-      {
-        name = "vi-mode";
-        src = pkgs.zsh-vi-mode;
-        file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
-      }
-    ];
     zplug = {
       enable = true;
       plugins = [
@@ -33,6 +26,7 @@
     };
     initContent = ''
       PATH="$(${pkgs.yarn}/bin/yarn global bin):$PATH"
+      source <(fzf --zsh)
     '';
     defaultKeymap = "viins";
     profileExtra = '' 

@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
   programs.zsh = {
     enable = true;
@@ -9,20 +9,6 @@
       enable = true;
       plugins = [ "ssh-agent" "pass" "emoji" "transfer" "vi-mode" ];
       extraConfig = "zstyle :omz:plugins:ssh-agent identities id_rsa";
-    };
-    zplug = {
-      enable = true;
-      plugins = [
-        {
-          name = "wfxr/forgit";
-          tags = [ ];
-        }
-        {
-          name = "g-plane/zsh-yarn-autocompletions";
-          tags = [ ''hook-build:"./zplug.zsh", defer:2'' ];
-        }
-      ];
-      zplugHome = "${config.home.homeDirectory}/.config/zplug";
     };
     initContent = ''
       PATH="$(${pkgs.yarn}/bin/yarn global bin):$PATH"

@@ -15,10 +15,11 @@
       ignore = "update-index --assume-unchanged";
       unignore = "update-index --no-assume-unchanged";
       d = "difftool";
+      fg = "forgit";
     };
 
     ignores = [ "*.swp" ];
-    
+
     extraConfig = {
       pull.rebase = "true";
       init = { defaultBranch = "main"; };
@@ -27,7 +28,7 @@
       diff.tool = "difftastic";
       difftool.prompt = false;
       difftool.difftastic.cmd = "${pkgs.difftastic}/bin/difft $LOCAL $REMOTE";
-      
+
       github.user = builtins.head (lib.splitString "@" userConfig.email);
       gitlab.user = builtins.head (lib.splitString "@" userConfig.email);
 

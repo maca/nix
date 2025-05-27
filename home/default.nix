@@ -27,6 +27,7 @@ userConfig: { pkgs, lib, ... }:
     difftastic
     delta
     lazygit
+    zsh-forgit
     gitui
     gh
     nixpkgs-fmt

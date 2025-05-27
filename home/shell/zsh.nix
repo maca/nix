@@ -26,7 +26,12 @@
     };
     initContent = ''
       PATH="$(${pkgs.yarn}/bin/yarn global bin):$PATH"
+
       source <(fzf --zsh)
+
+      [ -f ${pkgs.zsh-forgit}/share/zsh/zsh-forgit/forgit.plugin.zsh ] &&
+        source ${pkgs.zsh-forgit}/share/zsh/zsh-forgit/forgit.plugin.zsh
+      PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
     '';
     defaultKeymap = "viins";
     profileExtra = '' 

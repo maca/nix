@@ -66,5 +66,6 @@
     "xnviewmp"
     "gimp"
     "rsyncui"
+    "macfuse"
   ];
 }

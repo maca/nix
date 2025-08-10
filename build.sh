@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -euo pipefail
+
 # Build the Darwin configuration
 echo "Building Darwin configuration..."
 nix build ".#darwinConfigurations.air.system" --impure --fallback --extra-experimental-features 'nix-command flakes'

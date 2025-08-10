@@ -7,6 +7,7 @@ userConfig: { pkgs, lib, ... }:
   imports = [
     ./programs
     ./shell
+    ./backup
     (import ./git/default.nix { inherit userConfig; })
   ];
 
@@ -73,12 +74,14 @@ userConfig: { pkgs, lib, ... }:
     tesseract4
     ghostscript
     yt-dlp
-    zbar
     retry
     httrack
     rclone
     rsync
+    borgbackup
+    python3Packages.llfuse
     android-tools
     claude-code
+    sass
   ] ++ lib.optionals stdenv.isDarwin [ m-cli ];
 }

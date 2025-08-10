@@ -18,7 +18,7 @@
       fg = "forgit";
     };
 
-    ignores = [ "*.swp" ];
+    ignores = [ "*.swp" "*.claude/" ];
 
     extraConfig = {
       pull.rebase = "true";

@@ -78,8 +78,6 @@ userConfig: { pkgs, lib, ... }:
     httrack
     rclone
     rsync
-    borgbackup
-    python3Packages.llfuse
     android-tools
     claude-code
     sass

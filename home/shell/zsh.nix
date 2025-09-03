@@ -12,6 +12,7 @@
     };
     initContent = ''
       PATH="$(${pkgs.yarn}/bin/yarn global bin):$PATH"
+      PATH="$HOME/.local/bin:$PATH"
 
       source <(fzf --zsh)
 

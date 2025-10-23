@@ -4,11 +4,13 @@
 {
   programs.git = {
     enable = true;
-    
+
     settings = {
       user = {
         name = userConfig.fullName;
         email = userConfig.email;
+      } // lib.optionalAttrs (userConfig.signingKey != null) {
+        signingkey = userConfig.signingKey;
       };
 
       alias = {
@@ -22,8 +24,8 @@
         fg = "forgit";
       };
 
-      pull.rebase = "true";
-      init = { defaultBranch = "main"; };
+      pull.rebase = true;
+      init.defaultBranch = "main";
       pager.difftool = true;
 
       diff.tool = "difftastic";
@@ -36,7 +38,6 @@
       core.excludesfile = "~/.gitignore";
     } // lib.optionalAttrs (userConfig.signingKey != null) {
       commit.gpgsign = true;
-      user.signingkey = userConfig.signingKey;
     };
 
     ignores = [ "*.swp" "*.claude/" ];

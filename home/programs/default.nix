@@ -7,6 +7,8 @@
     ./htop.nix
     ./direnv.nix
     ./pass.nix
+    ./browserpass.nix
     ./kitty.nix
+    ./emacs.nix
   ];
 }

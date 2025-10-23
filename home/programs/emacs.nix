@@ -8,16 +8,32 @@
       epkgs.magit
       epkgs.melpaPackages.helix
       epkgs.nongnuPackages.multiple-cursors
+      epkgs.melpaPackages.solarized-theme
     ];
   };
 
   home.file.".emacs.d/init.el".text = ''
-    ;; Basic emacs configuration
-    (setq inhibit-startup-message t)
-    (setq ring-bell-function 'ignore)
-    (column-number-mode 1)
+    ;;; Font configuration
+    (set-face-attribute 'default nil
+                        :family "Inconsolata Nerd Font"
+                        :height 240
+                        :weight 'normal)
 
-    ;; Setup helix-mode with multiple cursors
+    ;;; Basic emacs configuration
+    (setq inhibit-startup-message t)
+    (setq initial-scratch-message nil)
+
+    ;;; Window configuration
+    (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+    ;;; Theme configuration
+    (require 'solarized-theme)
+    (load-theme 'solarized-dark t)
+
+    ;;; Git configuration
+    (require 'magit)
+
+    ;;; Helix-mode with multiple cursors
     (require 'multiple-cursors)
     (require 'helix)
 

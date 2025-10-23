@@ -23,6 +23,9 @@
     (setq inhibit-startup-message t)
     (setq initial-scratch-message nil)
 
+    ;; Disable menu bar (especially useful in terminal mode)
+    (menu-bar-mode -1)
+
     ;;; Window configuration
     (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -40,11 +43,15 @@
     ;; Enable multiple cursors support for helix
     (helix-multiple-cursors-setup)
 
+    ;; Enable jj as escape for terminal mode (where ESC doesn't bind properly)
+    (helix-jj-setup 0.2)
+
     ;; Enable relative line numbers in normal mode, absolute in insert mode
     (add-hook 'helix-normal-mode-hook (lambda () (setq display-line-numbers 'relative)))
     (add-hook 'helix-insert-mode-hook (lambda () (setq display-line-numbers t)))
 
-    ;; Enable helix-mode globally
-    (helix-mode)
+    ;; Enable helix-mode globally - use after-init-hook to ensure it activates properly
+    (add-hook 'after-init-hook 'helix-mode)
+    (global-set-key (kbd "C-z") 'helix-mode)
   '';
 }

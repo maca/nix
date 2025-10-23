@@ -9,7 +9,6 @@
       user = {
         name = userConfig.fullName;
         email = userConfig.email;
-      } // lib.optionalAttrs (userConfig.signingKey != null) {
         signingkey = userConfig.signingKey;
       };
 
@@ -24,6 +23,8 @@
         fg = "forgit";
       };
 
+      commit.gpgsign = true;
+
       pull.rebase = true;
       init.defaultBranch = "main";
       pager.difftool = true;
@@ -36,8 +37,6 @@
       gitlab.user = builtins.head (lib.splitString "@" userConfig.email);
 
       core.excludesfile = "~/.gitignore";
-    } // lib.optionalAttrs (userConfig.signingKey != null) {
-      commit.gpgsign = true;
     };
 
     ignores = [ "*.swp" "*.claude/" ];

@@ -18,74 +18,114 @@ userConfig: { pkgs, lib, ... }:
 
   # All packages
   home.packages = with pkgs; [
+    # Core utilities
     coreutils
     curl
     wget
     gnupg
+    shared-mime-info
+
+    # Shell and CLI tools
     fzf
     fd
     watch
     silver-searcher
-    difftastic
-    delta
-    lazygit
-    zsh-forgit
-    gh
-    nixpkgs-fmt
-    nil
-    zplug
-    cloc
-    ssh-copy-id
-    heroku
-    shared-mime-info
-    ffmpeg
-    imagemagick
-    graphviz
-    vimv
-    pgcli
     jq
     yq
-    postgresql
+    vimv
+    cloc
+    retry
+
+    # Git and version control
+    gh
+    lazygit
+    difftastic
+    delta
+    zsh-forgit
+
+    # SSH tools
+    ssh-copy-id
+
+    # Nix tools
+    nixpkgs-fmt
+    nil
+
+    # Shell
+    zplug
+
+    # Development environments and languages
+    # Haskell
     stack
-    podman
-    qemu
-    docker-compose
-    # (ruby.withPackages (ps: with ps; [ nokogiri pry pg rails minitest ]))
+
+    # Ruby
+    ruby_3_3
+
+    # Elm
     elmPackages.elm
     elmPackages.elm-doc-preview
     elmPackages.elm-live
     elmPackages.elm-test
     elmPackages.elm-language-server
     elmPackages.elm-review
-    redocly
+
+    # Node.js and JavaScript
+    nodejs_22
+    yarn
+    nodePackages.typescript-language-server
+    nodePackages.ts-node
+    yarn2nix
+    node2nix
+    sass
+    eslint
+
+    # Elixir
+    elixir
+
+    # Gleam
+    gleam
+
+    # Database
+    postgresql
+    pgcli
+
+    # Web server
+    nginx
+
+    # Containers and virtualization
+    podman
+    qemu
+    docker-compose
+
+    # Documentation and markup
     marksman
     markdown-oxide
     dprint
     pandoc
-    nodejs_22
-    yarn
-    nodePackages.typescript-language-server
-    yarn2nix
-    node2nix
-    nodePackages.ts-node
-    elixir
-    gleam
+    redocly
+    mustache-go
+
+    # Media tools
+    ffmpeg
+    imagemagick
+    graphviz
     tesseract4
     ghostscript
     yt-dlp
-    retry
-    httrack
+    streamrip
+
+    # Sync and backup
     rclone
     rsync
+    httrack
+
+    # Cloud and deployment
+    heroku
+
+    # Mobile development
     android-tools
+
+    # AI and code tools
     claude-code
     opencode
-    sass
-    streamrip
-    # Fabian
-    nginx
-    eslint
-    mustache-go
-    # bmake
   ] ++ lib.optionals stdenv.isDarwin [ m-cli ];
 }

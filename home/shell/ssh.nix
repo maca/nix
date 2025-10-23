@@ -4,6 +4,13 @@
     enable = true;
     enableDefaultConfig = false;
     matchBlocks = {
+      "*" = {
+        addKeysToAgent = "yes";
+        extraOptions = {
+          UseKeychain = "yes";
+          IdentityFile = "~/.ssh/id_ed25519";
+        };
+      };
       router = {
         hostname = "192.168.8.1";
         user = "root";

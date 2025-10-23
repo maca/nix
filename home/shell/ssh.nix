@@ -2,6 +2,7 @@
 {
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     matchBlocks = {
       router = {
         hostname = "192.168.8.1";

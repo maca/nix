@@ -24,12 +24,12 @@ userConfig: { pkgs, lib, ... }:
     gnupg
     fzf
     fd
+    watch
     silver-searcher
     difftastic
     delta
     lazygit
     zsh-forgit
-    gitui
     gh
     nixpkgs-fmt
     nil
@@ -49,9 +49,8 @@ userConfig: { pkgs, lib, ... }:
     stack
     podman
     qemu
-    buildah
     docker-compose
-    (ruby.withPackages (ps: with ps; [ nokogiri pry pg rails minitest ]))
+    # (ruby.withPackages (ps: with ps; [ nokogiri pry pg rails minitest ]))
     elmPackages.elm
     elmPackages.elm-doc-preview
     elmPackages.elm-live
@@ -80,6 +79,13 @@ userConfig: { pkgs, lib, ... }:
     rsync
     android-tools
     claude-code
+    opencode
     sass
+    streamrip
+    # Fabian
+    nginx
+    eslint
+    mustache-go
+    # bmake
   ] ++ lib.optionals stdenv.isDarwin [ m-cli ];
 }

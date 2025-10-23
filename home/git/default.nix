@@ -4,23 +4,24 @@
 {
   programs.git = {
     enable = true;
-    userName = userConfig.fullName;
-    userEmail = userConfig.email;
+    
+    settings = {
+      user = {
+        name = userConfig.fullName;
+        email = userConfig.email;
+      };
 
-    aliases = {
-      h = "log --pretty=format:'%Creset%C(red bold)[%ad] %C(blue bold)%h %Creset%C(magenta bold)%d %Creset%s %C(green bold)(%an)%Creset' --graph --abbrev-commit --date=short";
-      ha = "log --pretty=format:'%Creset%C(red bold)[%ad] %C(blue bold)%h %Creset%C(magenta bold)%d %Creset%s %C(green bold)(%an)%Creset' --graph --all --abbrev-commit --date=short";
-      ff = "!branch=$(git symbolic-ref HEAD | cut -d '/' -f 3) && git merge --ff-only $\{1\:-$(git config --get branch.$branch.remote)/$( git config --get branch.$branch.merge | cut -d '/' -f 3)\}";
-      dm = "branch --merged | grep -v \* | xargs git branch -D";
-      ignore = "update-index --assume-unchanged";
-      unignore = "update-index --no-assume-unchanged";
-      d = "difftool";
-      fg = "forgit";
-    };
+      alias = {
+        h = "log --pretty=format:'%Creset%C(red bold)[%ad] %C(blue bold)%h %Creset%C(magenta bold)%d %Creset%s %C(green bold)(%an)%Creset' --graph --abbrev-commit --date=short";
+        ha = "log --pretty=format:'%Creset%C(red bold)[%ad] %C(blue bold)%h %Creset%C(magenta bold)%d %Creset%s %C(green bold)(%an)%Creset' --graph --all --abbrev-commit --date=short";
+        ff = "!branch=$(git symbolic-ref HEAD | cut -d '/' -f 3) && git merge --ff-only $\{1\:-$(git config --get branch.$branch.remote)/$( git config --get branch.$branch.merge | cut -d '/' -f 3)\}";
+        dm = "branch --merged | grep -v \* | xargs git branch -D";
+        ignore = "update-index --assume-unchanged";
+        unignore = "update-index --no-assume-unchanged";
+        d = "difftool";
+        fg = "forgit";
+      };
 
-    ignores = [ "*.swp" "*.claude/" ];
-
-    extraConfig = {
       pull.rebase = "true";
       init = { defaultBranch = "main"; };
       pager.difftool = true;
@@ -37,5 +38,7 @@
       commit.gpgsign = true;
       user.signingkey = userConfig.signingKey;
     };
+
+    ignores = [ "*.swp" "*.claude/" ];
   };
 }

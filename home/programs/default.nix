@@ -10,5 +10,6 @@
     ./browserpass.nix
     ./kitty.nix
     ./emacs.nix
+    ./faust
   ];
 }

@@ -67,7 +67,21 @@
           auto-format = true;
           formatter = { command = "nixpkgs-fmt"; args = [ ]; };
         }
+        {
+          name = "faust";
+          scope = "source.faust";
+          file-types = [ "dsp" "lib" ];
+          comment-token = "//";
+          indent = { tab-width = 4; unit = "    "; };
+          language-servers = [ "faustlsp" ];
+          auto-format = true;
+          formatter = { command = "faustfmt"; };
+        }
       ];
+
+      language-server.faustlsp = {
+        command = "faustlsp";
+      };
     };
   };
 }

@@ -113,6 +113,9 @@ userConfig: { pkgs, lib, ... }:
     yt-dlp
     streamrip
 
+    # Audio programming
+    faust
+
     # Sync and backup
     rclone
     rsync
